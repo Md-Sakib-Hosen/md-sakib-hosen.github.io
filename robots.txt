@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://md-sakib-hosen.github.io/sitemap.xml
