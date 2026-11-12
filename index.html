@@ -167,6 +167,18 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #06b6d4;
     }
+
+    /* Prevent 1px sub-pixel white seam on card image hover zoom */
+    .aspect-video,
+    .aspect-\[16\/9\] {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    .aspect-video img,
+    .aspect-\[16\/9\] img {
+      backface-visibility: hidden;
+      will-change: transform;
+    }
   </style>
 
   <!-- SEO and social-sharing metadata -->
@@ -420,7 +432,7 @@
                 <img id="hero-profile-img" src="assets/profile-sakib.jpg" loading="eager" alt="MD Sakib Hosen - IT Support Specialist & Network Support Engineer" class="w-full h-full object-cover object-top transition-transform duration-500 hover:scale-105">
 
                 <!-- Subtle Dark Vignette & Gradient Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-950 via-transparent to-transparent opacity-60 pointer-events-none"></div>
 
                 <!-- Lower Card Caption -->
                 <div class="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-slate-950/85 border border-slate-800/80 backdrop-blur-md flex items-center justify-between">
@@ -491,7 +503,7 @@
         <div class="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-1.5 shadow-xl">
           <div class="aspect-video w-full overflow-hidden relative">
             <img src="assets/datacenter-colo.jpg" loading="lazy" alt="Colocation data center server racks at Dhaka Colo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-950 via-slate-950/40 to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2.5 py-1 rounded-md bg-cyan-950/80 text-cyan-300 border border-cyan-700/50 backdrop-blur-md">
               Dhaka Colo Intern
             </span>
@@ -508,7 +520,7 @@
         <div class="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-sky-500/50 transition-all duration-500 hover:-translate-y-1.5 shadow-xl">
           <div class="aspect-video w-full overflow-hidden relative">
             <img src="assets/hardware-workbench.jpg" loading="lazy" alt="Hardware workstation assembly and diagnostic workbench" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-950 via-slate-950/40 to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2.5 py-1 rounded-md bg-sky-950/80 text-sky-300 border border-sky-700/50 backdrop-blur-md">
               Hardware Lab Bench
             </span>
@@ -525,7 +537,7 @@
         <div class="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-violet-500/50 transition-all duration-500 hover:-translate-y-1.5 shadow-xl">
           <div class="aspect-video w-full overflow-hidden relative">
             <img src="assets/game-dev-ue4.jpg" loading="lazy" alt="Unreal Engine 4 game development and mechanics testing simulation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-950 via-slate-950/40 to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2.5 py-1 rounded-md bg-violet-950/80 text-violet-300 border border-violet-700/50 backdrop-blur-md">
               ICT Ministry Attachment (UE4)
             </span>
@@ -782,7 +794,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-cyan-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="network">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/project-mikrotik-lab.jpg" loading="lazy" alt="Mikrotik router testbench" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-800/50 backdrop-blur-sm">
               MikroTik Routing Lab
             </span>
@@ -809,7 +821,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-sky-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="network">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/project-isp-ftth.jpg" loading="lazy" alt="ISP network monitoring" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-sky-950/80 text-sky-300 border border-sky-800/50 backdrop-blur-sm">
               Carnival Internet / SSD Tech
             </span>
@@ -836,7 +848,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-emerald-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="datacenter">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/datacenter-colo.jpg" loading="lazy" alt="Dhaka Colo data center maintenance" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-800/50 backdrop-blur-sm">
               Dhaka Colo / Tech Elevate
             </span>
@@ -863,7 +875,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-violet-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="hardware">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/project-workstation-assembly.jpg" loading="lazy" alt="150+ workstations assembly" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-violet-950/80 text-violet-300 border border-violet-800/50 backdrop-blur-sm">
               Master Technology Ltd
             </span>
@@ -890,7 +902,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-cyan-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="hardware">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/project-windows-support.jpg" loading="lazy" alt="Enterprise Windows IT Support" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-800/50 backdrop-blur-sm">
               IT Support Systems
             </span>
@@ -917,7 +929,7 @@
         <div class="project-card spotlight-card rounded-2xl bg-slate-900/50 border border-slate-800/80 overflow-hidden flex flex-col justify-between hover:border-violet-500/40 hover:-translate-y-1.5 transition-all duration-300 group shadow-lg" data-category="hardware">
           <div class="aspect-[16/9] w-full overflow-hidden relative">
             <img src="assets/game-dev-ue4.jpg" loading="lazy" alt="Unreal Engine 4 Game Development and Testing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+            <div class="absolute -inset-px bg-gradient-to-t pointer-events-none from-slate-900 via-transparent to-transparent"></div>
             <span class="absolute top-3 left-3 text-[11px] font-mono px-2 py-0.5 rounded bg-violet-950/80 text-violet-300 border border-violet-800/50 backdrop-blur-sm">
               ICT Ministry · UE4 Attachment
             </span>
