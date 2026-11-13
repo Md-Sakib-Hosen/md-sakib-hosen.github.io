@@ -6,16 +6,6 @@
   <title>MD Sakib Hosen | IT & Network Support Engineer</title>
   <meta name="description" content="Portfolio of MD Sakib Hosen - Certified MTCNA, MTCRE & NSDA Level-3 IT Support Specialist & Network Support Engineer. Open to overseas relocation.">
   <meta name="yandex-verification" content="9bbd50a5fc897023" />
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CWWDLVF2R"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-8CWWDLVF2R');
-  </script>
-  <!-- Ahrefs Web Analytics -->
-  <script src="https://analytics.ahrefs.com/analytics.js" data-key="ANjMf+jgVWXbpHIar4BpUA" async></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -309,15 +299,6 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.png">
   <link rel="shortcut icon" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/favicon.png">
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "zctz0j1oks");
-  </script>
 </head>
 <body class="bg-[#07090e] text-slate-200 antialiased selection:bg-cyan-500/30 selection:text-cyan-200 min-h-screen flex flex-col relative overflow-x-hidden">
 
@@ -1639,8 +1620,8 @@
   </div>
 
   <script>
-    // 1. Mobile-Optimized Particle Network Canvas (Battery & Scroll Aware)
-    (function initParticleCanvas() {
+    // 1. Mobile-Optimized Particle Network Canvas (Battery, Scroll & TBT Aware)
+    function initParticleCanvas() {
       const canvas = document.getElementById('particle-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1730,7 +1711,14 @@
       });
 
       animId = requestAnimationFrame(draw);
-    })();
+    }
+    window.addEventListener('load', () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(initParticleCanvas, { timeout: 600 });
+      } else {
+        setTimeout(initParticleCanvas, 250);
+      }
+    });
 
     // 2. Scroll Progress Bar & Floating Back-to-Top Button Handler
     const scrollProgress = document.getElementById('scroll-progress');
@@ -2105,6 +2093,43 @@
     }
   </script>
 
-  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4db602b719e9453c8d48262ecae5fd04"}'></script><!-- End Cloudflare Web Analytics -->
+  <!-- Deferred Analytics (Loads after window.load + idle to keep TBT low) -->
+  <script>
+    window.addEventListener('load', function () {
+      var schedule = window.requestIdleCallback || function (cb) { return setTimeout(cb, 1200); };
+      schedule(function () {
+        // Google Analytics (gtag.js)
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { dataLayer.push(arguments); };
+        gtag('js', new Date());
+        gtag('config', 'G-8CWWDLVF2R');
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-8CWWDLVF2R';
+        document.head.appendChild(ga);
+
+        // Ahrefs Web Analytics
+        var ahrefs = document.createElement('script');
+        ahrefs.async = true;
+        ahrefs.src = 'https://analytics.ahrefs.com/analytics.js';
+        ahrefs.setAttribute('data-key', 'ANjMf+jgVWXbpHIar4BpUA');
+        document.head.appendChild(ahrefs);
+
+        // Microsoft Clarity
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "zctz0j1oks");
+
+        // Cloudflare Web Analytics
+        var cf = document.createElement('script');
+        cf.type = 'module';
+        cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+        cf.setAttribute('data-cf-beacon', '{"token": "4db602b719e9453c8d48262ecae5fd04"}');
+        document.body.appendChild(cf);
+      }, { timeout: 2500 });
+    });
+  </script>
 </body>
 </html>
