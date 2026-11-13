@@ -1,0 +1,25 @@
+{
+  "name": "MD Sakib Hosen | IT & Network Support Engineer",
+  "short_name": "Sakib Hosen",
+  "description": "Portfolio of MD Sakib Hosen - Certified MTCNA, MTCRE & NSDA Level-3 IT Support Specialist & Network Support Engineer.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07090e",
+  "theme_color": "#06b6d4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

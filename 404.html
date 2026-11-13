@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Route Not Found | MD Sakib Hosen</title>
+  <meta name="description" content="Page not found on MD Sakib Hosen's IT & Network Engineering portfolio.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.ahrefs.com https://www.clarity.ms https://*.clarity.ms https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://formsubmit.co https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://analytics.ahrefs.com https://*.clarity.ms https://cloudflareinsights.com https://*.cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests;">
+  <meta name="theme-color" content="#07090e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/tailwind.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png">
+  <style>
+    body {
+      background-color: #07090e;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+    }
+    .bg-grid-pattern {
+      background-size: 36px 36px;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-[#07090e] text-slate-200 antialiased min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px]"></div>
+    <div class="absolute -bottom-40 right-1/4 w-[500px] h-[500px] bg-sky-600/10 rounded-full blur-[140px]"></div>
+    <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
+  </div>
+
+  <header class="w-full border-b border-slate-800/80 bg-[#07090e]/85 backdrop-blur-xl z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-600 p-[1px] flex items-center justify-center shadow-lg shadow-cyan-500/20">
+          <div class="w-full h-full bg-[#090b14] rounded-[7px] flex items-center justify-center">
+            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l3 3-3 3m5 0h3"></path>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="font-bold text-slate-100 tracking-tight group-hover:text-cyan-400 transition-colors">MD Sakib Hosen</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-mono text-cyan-400/90 px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-800/50">MTCNA · MTCRE</span>
+        </div>
+      </a>
+      <a href="/" class="text-xs font-semibold px-4 py-2 rounded-lg bg-slate-800/90 border border-slate-700 text-cyan-300 hover:border-cyan-500/50 transition-all">
+        Return Home
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 z-10">
+    <div class="max-w-2xl w-full rounded-3xl bg-slate-900/70 border border-slate-800/90 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono mb-6">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        ICMP_DESTINATION_UNREACHABLE · HTTP 404
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Packet Dropped: <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">Route Not Found</span>
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
+        The requested URL does not exist in the routing table for <strong class="text-slate-200">md-sakib-hosen.github.io</strong>. Check the path or jump directly to an active portfolio interface below.
+      </p>
+
+      <div class="rounded-2xl bg-slate-950/90 border border-slate-800/90 p-4 font-mono text-xs text-slate-300 space-y-1.5 mb-8">
+        <div class="text-slate-500"># RouterOS Diagnostic Trace</div>
+        <div><span class="text-cyan-400">[admin@MikroTik-Core] &gt;</span> /ip route check dst-address=requested-url</div>
+        <div class="text-amber-300">status: no-route-to-host (code 404)</div>
+        <div class="text-emerald-400">action: redirecting to default gateway https://md-sakib-hosen.github.io/</div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="/" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-600 text-white font-semibold text-sm hover:from-cyan-400 hover:to-sky-500 shadow-lg shadow-cyan-500/20 transition-all">
+          Back to Portfolio Home
+        </a>
+        <a href="/#projects" class="px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 text-sm font-medium transition-all">
+          View Case Studies
+        </a>
+        <a href="/#contact" class="px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 text-sm font-medium transition-all">
+          Contact Sakib
+        </a>
+        <a href="/MD_Sakib_Hosen_CV.pdf" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-cyan-400 hover:border-cyan-500/50 text-sm font-mono transition-all">
+          Download CV (PDF)
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-6 text-center text-xs text-slate-500 z-10">
+    © 2026 MD Sakib Hosen · Certified MTCNA, MTCRE &amp; NSDA Level-3 IT &amp; Network Support Engineer
+  </footer>
+</body>
+</html>
