@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#0b1120"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="13.25" stroke="#1e293b" stroke-width="1.5"/>
+  <!-- Cyan crossbar tucked cleanly behind H stems -->
+  <path d="M36.5 32H49.5" stroke="#22d3ee" stroke-width="4.5" stroke-linecap="butt"/>
+  <!-- Architectural S (y=20..44) -->
+  <path d="M29 20H18.5C16.567 20 15 21.567 15 23.5V28.5C15 30.433 16.567 32 18.5 32H25.5C27.433 32 29 33.567 29 35.5V40.5C29 42.433 27.433 44 25.5 44H15"
+        stroke="#f8fafc" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Architectural H stems (y=20..44) -->
+  <path d="M36.5 20V44M49.5 20V44"
+        stroke="#f8fafc" stroke-width="4.8" stroke-linecap="round"/>
+</svg>
