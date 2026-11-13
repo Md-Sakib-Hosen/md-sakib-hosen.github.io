@@ -83,6 +83,129 @@
       }
     ]
   }
+
+    // =========================================================================
+    // MAIN PROFILE ANIMATIONS: PARTICLE CANVAS, SPOTLIGHT & SCROLL PROGRESS
+    // =========================================================================
+    function initParticleCanvas() {
+      const canvas = document.getElementById('particle-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const isMobile = window.innerWidth < 768;
+      const particleCount = isMobile ? 18 : 34;
+      let width = 0, height = 0;
+      let particles = [];
+      let animId = null;
+
+      function resize() {
+        const newW = window.innerWidth;
+        const newH = window.innerHeight;
+        if (Math.abs(newW - width) > 40 || Math.abs(newH - height) > 120 || width === 0) {
+          width = canvas.width = newW;
+          height = canvas.height = newH;
+        }
+      }
+      window.addEventListener('resize', resize, { passive: true });
+      resize();
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * (width || 800),
+          y: Math.random() * (height || 600),
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          radius: Math.random() * 1.5 + 1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(6, 182, 212, 0.45)';
+          ctx.fill();
+
+          const maxDist = isMobile ? 90 : 120;
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDist) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = 'rgba(6, 182, 212, ' + (0.15 * (1 - dist / maxDist)) + ')';
+              ctx.lineWidth = 0.75;
+              ctx.stroke();
+            }
+          }
+        }
+        animId = requestAnimationFrame(draw);
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (animId) cancelAnimationFrame(animId);
+        } else {
+          animId = requestAnimationFrame(draw);
+        }
+      });
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(initParticleCanvas, 300);
+    });
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.querySelectorAll('.spotlight-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+        }, { passive: true });
+      });
+    }
+
+    const scrollProgress = document.getElementById('scroll-progress');
+    const floatingActions = document.getElementById('floating-actions');
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    function handleCaseStudyScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollProgress && docHeight > 0) {
+        scrollProgress.style.width = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) + '%';
+      }
+      if (floatingActions) {
+        if (scrollTop > 240) {
+          floatingActions.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+          floatingActions.classList.add('opacity-100', 'translate-y-0');
+        } else {
+          floatingActions.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+          floatingActions.classList.remove('opacity-100', 'translate-y-0');
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleCaseStudyScroll, { passive: true });
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+    handleCaseStudyScroll();
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -103,60 +226,143 @@
     };
   </script>
   <style>
+    :root {
+      --brand-cyan: #06b6d4;
+      --brand-sky: #0284c7;
+      --brand-emerald: #10b981;
+    }
     body {
-      background-color: #060913;
+      background-color: #07090e;
       color: #e2e8f0;
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .bg-grid-pattern {
+      background-size: 36px 36px;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    @keyframes pulseSlow {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); }
+    }
+    .animate-pulse-slow {
+      animation: pulseSlow 8s ease-in-out infinite;
+    }
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
     }
     .glass-panel {
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(51, 65, 85, 0.65);
+      position: relative;
+      background: rgba(15, 19, 32, 0.6);
+      border: 1px solid rgba(30, 36, 56, 0.8);
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      will-change: transform;
     }
-    .code-scroll::-webkit-scrollbar {
-      height: 6px;
-      width: 6px;
+    /* Exact Spotlight Card & Desktop Hover from index.html */
+    .spotlight-card {
+      position: relative;
+      background: rgba(15, 19, 32, 0.6);
+      border: 1px solid rgba(30, 36, 56, 0.8);
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+      will-change: transform;
     }
-    .code-scroll::-webkit-scrollbar-track {
-      background: #090d16;
+    @media (hover: hover) and (pointer: fine) {
+      .spotlight-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(6, 182, 212, 0.12), transparent 40%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .spotlight-card:hover::before {
+        opacity: 1;
+      }
+      .spotlight-card:hover {
+        border-color: rgba(6, 182, 212, 0.45);
+        transform: translateY(-4px);
+        box-shadow: 0 16px 32px -8px rgba(6, 182, 212, 0.12);
+      }
+      button:active, a:active {
+        transform: scale(0.98);
+      }
+      .metric-lift {
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+      }
+      .metric-lift:hover {
+        transform: translateY(-3px);
+        border-color: rgba(6, 182, 212, 0.45);
+      }
     }
-    .code-scroll::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 3px;
+    .study-panel-enter {
+      animation: panelFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    @keyframes panelFadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .code-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+    .code-scroll::-webkit-scrollbar-track { background: #090d16; }
+    .code-scroll::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #07090e; }
+    ::-webkit-scrollbar-thumb { background: #1e2438; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
   </style>
 </head>
-<body class="min-h-screen antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+<body class="bg-[#07090e] min-h-screen antialiased selection:bg-cyan-500/30 selection:text-cyan-200 relative">
+
+  <!-- Interactive Network Canvas (Matches Main Profile) -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Ambient Light Gradients & Grid -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px] animate-pulse-slow"></div>
+    <div class="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-sky-600/10 rounded-full blur-[140px] animate-pulse-slow"></div>
+    <div class="absolute -bottom-40 left-1/3 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[140px]"></div>
+    <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
+  </div>
+
+  <!-- Top Reading Progress Bar -->
+  <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 via-sky-500 to-emerald-400 z-50 w-0 transition-all duration-75"></div>
 
   <!-- Sticky Unified Navigation Header -->
-  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-[#060913]/90 backdrop-blur-md">
+  <header class="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-[#07090e]/85 backdrop-blur-xl transition-all duration-300">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <a href="https://md-sakib-hosen.github.io/" class="inline-flex items-center gap-2.5 text-slate-100 hover:text-cyan-300 transition font-semibold text-sm sm:text-base">
-          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/40 font-mono text-cyan-300 text-xs">&gt;_</span>
-          <span>MD Sakib Hosen</span>
-        </a>
-        <span class="hidden sm:inline-block text-slate-600">/</span>
-        <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">Technical Case Studies Hub</span>
-      </div>
+      <a href="https://md-sakib-hosen.github.io/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-600 p-[1px] flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 group-hover:scale-105 transition-all">
+          <div class="w-full h-full bg-[#090b14] rounded-[7px] flex items-center justify-center">
+            <svg class="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l3 3-3 3m5 0h3"></path>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="font-bold text-slate-100 tracking-tight group-hover:text-cyan-400 transition-colors">MD Sakib Hosen</span>
+          <span class="hidden sm:inline-block ml-2 text-xs font-mono text-cyan-400/90 px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-800/50">MTCNA · MTCRE</span>
+        </div>
+      </a>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="https://md-sakib-hosen.github.io/" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 text-xs sm:text-sm font-medium transition">
+        <a href="https://md-sakib-hosen.github.io/" class="text-xs font-semibold px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-sky-600 text-white hover:from-cyan-400 hover:to-sky-500 shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/30 hover:scale-[1.02] transition-all">
           &larr; Main Portfolio
         </a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
 
     <!-- Unified Case Study Switcher Bar (Add future case study buttons here) -->
     <section class="glass-panel rounded-2xl p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -188,7 +394,7 @@
     <!-- ===================================================================== -->
     <article id="study-mikrotik" data-study-panel="mikrotik" class="space-y-10">
 
-      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
         <div class="max-w-3xl space-y-4">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -203,22 +409,22 @@
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">BFD Failover Convergence</div>
             <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">&lt; 30 ms</div>
             <div class="text-xs text-slate-400 mt-1">3x 10ms BFD multiplier on Dual-WAN</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">PPPoE Subscriber Capacity</div>
             <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">240+ Sessions</div>
             <div class="text-xs text-slate-400 mt-1">1480 MTU + TCP-MSS clamping</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Optical &amp; FTTH Link Margin</div>
             <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">-18.5 dBm</div>
             <div class="text-xs text-slate-400 mt-1">Verified ONU/OLT optical budget</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Subscriber Queue Discipline</div>
             <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">PCQ Fair-Share</div>
             <div class="text-xs text-slate-400 mt-1">Dynamic sub-stream equalization</div>
@@ -227,7 +433,7 @@
       </section>
 
       <!-- Interactive Dual-WAN & PPPoE Topology Simulator -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-cyan-400">Interactive Architecture Simulator</span>
@@ -295,7 +501,7 @@
       </section>
 
       <!-- Interactive PCQ Bandwidth Calculator -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div>
           <span class="text-xs font-mono uppercase tracking-wider text-emerald-400">Interactive ISP Engineering Tool</span>
           <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">MikroTik PCQ (Per Connection Queue) Shaper Calculator</h3>
@@ -353,7 +559,7 @@
       </section>
 
       <!-- Tabbed Production RouterOS v7 CLI Runbooks -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Verified Field Configurations</span>
@@ -390,7 +596,7 @@
     <!-- ===================================================================== -->
     <article id="study-openwrt" data-study-panel="openwrt" class="space-y-10 hidden">
 
-      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
         <div class="max-w-3xl space-y-4">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -405,22 +611,22 @@
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Firmware &amp; Package Engine</div>
             <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">OpenWrt 25.12.6</div>
             <div class="text-xs text-slate-400 mt-1">Kernel 6.12.112 · Alpine APK v3</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">OOM-Safe Domain Filtering</div>
             <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">480,000+ Rules</div>
             <div class="text-xs text-slate-400 mt-1">parallel_downloads=1 on 234 MiB RAM</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Encrypted DNS Redundancy</div>
             <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">Quad DoH (5053–56)</div>
             <div class="text-xs text-slate-400 mt-1">Google, Cloudflare, AdGuard, Quad9</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Flash Overlay Headroom</div>
             <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">50.0 MB Free</div>
             <div class="text-xs text-slate-400 mt-1">45% used after legacy DoH purge</div>
@@ -429,7 +635,7 @@
       </section>
 
       <!-- Interactive HFO vs. SQM Mode Toggle + Calibration Calculator -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-cyan-400">Silicon Routing Architecture Decision</span>
@@ -514,7 +720,7 @@
       </section>
 
       <!-- Interactive OpenWrt 25.12.6 Deployment, Health Check & TFTP Recovery Tabs -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-emerald-400">Master Setup Guide 2.0 Runbooks</span>
@@ -552,7 +758,7 @@
       </section>
 
       <!-- Verified Upstream Package Matrix -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div>
           <span class="text-xs font-mono uppercase tracking-wider text-sky-400">Software &amp; Repository Inventory</span>
           <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Verified OpenWrt 25.12.6 Packages &amp; Upstream Sources</h3>
@@ -610,7 +816,7 @@
     <!-- ===================================================================== -->
     <article id="study-openwrt-mobile" data-study-panel="openwrt-mobile" class="space-y-10 hidden">
 
-      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
         <div class="max-w-3xl space-y-4">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -625,22 +831,22 @@
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Smartphone Control Plane</div>
             <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">Yet Another LuCI</div>
             <div class="text-xs text-slate-400 mt-1">Native mobile RPC via uhttpd/rpcd</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">UI &amp; Monitoring Suite</div>
             <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">OppsError404 + Argon</div>
             <div class="text-xs text-slate-400 mt-1">Dashboard v2.0 + Client Monitor</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Traffic Accounting</div>
             <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">vnStat2 + nlbwmon</div>
             <div class="text-xs text-slate-400 mt-1">30s refresh · 24h persistent commit</div>
           </div>
-          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+          <div class="metric-lift p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
             <div class="text-xs font-mono text-slate-400">Strict LAN Binding</div>
             <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">Ports 7681 &amp; 9100</div>
             <div class="text-xs text-slate-400 mt-1">Zero WAN exposure (nftables verified)</div>
@@ -649,7 +855,7 @@
       </section>
 
       <!-- Interactive Mobile Workflow & Daemon Architecture -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Smartphone &amp; Web Telemetry Workflow</span>
@@ -696,7 +902,7 @@
       </section>
 
       <!-- Mobile & Telemetry Upstream Matrix -->
-      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+      <section class="glass-panel spotlight-card rounded-3xl p-6 sm:p-8 space-y-6">
         <div>
           <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Observability &amp; UI Stack</span>
           <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Mobile Administration &amp; Telemetry Package Matrix</h3>
@@ -764,7 +970,7 @@
 
   </main>
 
-  <footer class="border-t border-slate-800/80 py-8 mt-12 text-center text-xs text-slate-400">
+  <footer class="relative z-10 border-t border-slate-800/80 bg-[#06080d]/90 py-8 mt-12 text-center text-xs text-slate-400">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>&copy; 2026 <a href="https://md-sakib-hosen.github.io/" class="text-slate-200 hover:text-cyan-300">MD Sakib Hosen</a> · Certified MTCNA &amp; MTCRE</div>
       <div class="flex items-center gap-4">
@@ -775,6 +981,13 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating Back to Top Button -->
+  <div id="floating-actions" class="fixed bottom-6 right-6 z-40 opacity-0 pointer-events-none transition-all duration-500 transform translate-y-4">
+    <button id="back-to-top" type="button" class="p-3 rounded-full bg-slate-900/90 text-cyan-400 border border-cyan-800/60 shadow-xl hover:bg-cyan-950 hover:border-cyan-500/80 transition-all flex items-center justify-center group" aria-label="Back to Top">
+      <svg class="w-5 h-5 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+  </div>
 
   <script>
     function copyTextToClipboard(text, btnElement, defaultLabel) {
@@ -821,7 +1034,13 @@
       if (!targetPanel) return;
 
       studyPanels.forEach(panel => {
-        panel.classList.toggle('hidden', panel.getAttribute('data-study-panel') !== slug);
+        const isMatch = panel.getAttribute('data-study-panel') === slug;
+        panel.classList.toggle('hidden', !isMatch);
+        if (isMatch) {
+          panel.classList.remove('study-panel-enter');
+          void panel.offsetWidth;
+          panel.classList.add('study-panel-enter');
+        }
       });
 
       studyTabs.forEach(tab => {
