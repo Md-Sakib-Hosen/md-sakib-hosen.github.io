@@ -1680,11 +1680,16 @@
       animId = requestAnimationFrame(draw);
     }
     window.addEventListener('load', () => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(initParticleCanvas, { timeout: 600 });
-      } else {
-        setTimeout(initParticleCanvas, 250);
-      }
+      let started = false;
+      const startCanvas = () => {
+        if (started) return;
+        started = true;
+        initParticleCanvas();
+      };
+      setTimeout(startCanvas, 2200);
+      ['pointerdown', 'scroll'].forEach(ev =>
+        window.addEventListener(ev, startCanvas, { once: true, passive: true })
+      );
     });
 
     // 2. Scroll Progress Bar & Floating Back-to-Top Button Handler
@@ -2063,8 +2068,10 @@
   <!-- Deferred Analytics (Loads after window.load + idle to keep TBT low) -->
   <script>
     window.addEventListener('load', function () {
-      var schedule = window.requestIdleCallback || function (cb) { return setTimeout(cb, 1200); };
-      schedule(function () {
+      var loaded = false;
+      function loadAnalytics() {
+        if (loaded) return;
+        loaded = true;
         // Google Analytics (gtag.js)
         window.dataLayer = window.dataLayer || [];
         window.gtag = function () { dataLayer.push(arguments); };
@@ -2095,7 +2102,11 @@
         cf.src = 'https://static.cloudflareinsights.com/beacon.min.js';
         cf.setAttribute('data-cf-beacon', '{"token": "4db602b719e9453c8d48262ecae5fd04"}');
         document.body.appendChild(cf);
-      }, { timeout: 2500 });
+      }
+      setTimeout(loadAnalytics, 4000);
+      ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (ev) {
+        window.addEventListener(ev, loadAnalytics, { once: true, passive: true });
+      });
     });
   </script>
 </body>
