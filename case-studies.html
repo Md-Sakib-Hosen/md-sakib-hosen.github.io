@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Case Studies &amp; Network Engineering Labs | MD Sakib Hosen</title>
+  <meta name="description" content="Unified technical case studies hub by MD Sakib Hosen (MTCNA, MTCRE): MikroTik RouterOS v7 Dual-WAN BGP/OSPF &amp; PCQ lab, ASUS RT-AX52 OpenWrt 25.12.6 (apk) HFO vs. SQM CAKE &amp; 480K+ AdBlock-Fast, and Mobile-First LuCI Telemetry." />
+  <meta name="keywords" content="MD Sakib Hosen, Technical Case Studies, MikroTik RouterOS v7, MTCNA, MTCRE, OpenWrt 25.12.6, apk, ASUS RT-AX52, SQM CAKE, Hardware Flow Offloading, Yet Another LuCI App, OppsError404, Prometheus Exporter, Network Engineer Dhaka" />
+  <meta name="author" content="MD Sakib Hosen" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://md-sakib-hosen.github.io/case-studies.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.png" />
+
+  <!-- Identity & Social Graph Links -->
+  <link rel="me" href="https://md-sakib-hosen.github.io/" />
+  <link rel="me" href="https://github.com/Md-Sakib-Hosen" />
+  <link rel="me" href="https://www.linkedin.com/in/zero-sakib/" />
+  <link rel="me" href="https://x.com/iam_sakib_hosen" />
+  <link rel="me" href="https://www.facebook.com/zero.mh.sakib" />
+  <link rel="me" href="https://t.me/zero_mh_sakib" />
+
+  <!-- Open Graph / Social Card -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="MD Sakib Hosen" />
+  <meta property="og:title" content="Technical Case Studies &amp; Engineering Labs | MD Sakib Hosen" />
+  <meta property="og:description" content="Interactive MikroTik RouterOS v7 routing labs, OpenWrt 25.12.6 (apk) HFO vs. SQM CAKE architecture, and Mobile-First LuCI &amp; Prometheus telemetry." />
+  <meta property="og:url" content="https://md-sakib-hosen.github.io/case-studies.html" />
+  <meta property="og:image" content="https://md-sakib-hosen.github.io/assets/og-image.jpg?v=2" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@iam_sakib_hosen" />
+  <meta name="twitter:title" content="Technical Case Studies &amp; Engineering Labs | MD Sakib Hosen" />
+  <meta name="twitter:description" content="MikroTik RouterOS v7 routing labs, OpenWrt 25.12.6 (apk) edge architecture, and Mobile-First LuCI telemetry by MD Sakib Hosen." />
+  <meta name="twitter:image" content="https://md-sakib-hosen.github.io/assets/og-image.jpg?v=2" />
+
+  <!-- Schema.org CollectionPage + BreadcrumbList JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "name": "Technical Case Studies & Network Engineering Labs",
+        "description": "Unified portfolio hub containing interactive MikroTik RouterOS v7, OpenWrt 25.12.6 (apk), and Mobile-First LuCI Telemetry engineering case studies by MD Sakib Hosen.",
+        "url": "https://md-sakib-hosen.github.io/case-studies.html",
+        "author": {
+          "@type": "Person",
+          "name": "MD Sakib Hosen",
+          "url": "https://md-sakib-hosen.github.io/",
+          "jobTitle": "IT Support Specialist & Network Support Engineer",
+          "sameAs": [
+            "https://github.com/Md-Sakib-Hosen",
+            "https://www.linkedin.com/in/zero-sakib/",
+            "https://x.com/iam_sakib_hosen",
+            "https://www.facebook.com/zero.mh.sakib",
+            "https://t.me/zero_mh_sakib"
+          ]
+        },
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "MD Sakib Hosen",
+          "url": "https://md-sakib-hosen.github.io/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "MD Sakib Hosen Portfolio",
+            "item": "https://md-sakib-hosen.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Technical Case Studies Hub",
+            "item": "https://md-sakib-hosen.github.io/case-studies.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #060913;
+      color: #e2e8f0;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(51, 65, 85, 0.65);
+    }
+    .code-scroll::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .code-scroll::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    .code-scroll::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+
+  <!-- Sticky Unified Navigation Header -->
+  <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-[#060913]/90 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="https://md-sakib-hosen.github.io/" class="inline-flex items-center gap-2.5 text-slate-100 hover:text-cyan-300 transition font-semibold text-sm sm:text-base">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/40 font-mono text-cyan-300 text-xs">&gt;_</span>
+          <span>MD Sakib Hosen</span>
+        </a>
+        <span class="hidden sm:inline-block text-slate-600">/</span>
+        <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">Technical Case Studies Hub</span>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="https://md-sakib-hosen.github.io/" class="px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700 text-xs sm:text-sm font-medium transition">
+          &larr; Main Portfolio
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+
+    <!-- Unified Case Study Switcher Bar (Add future case study buttons here) -->
+    <section class="glass-panel rounded-2xl p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div>
+        <div class="text-xs font-mono uppercase tracking-wider text-cyan-400">Modular Case Studies Archive</div>
+        <h1 class="text-lg sm:text-xl font-bold text-white mt-0.5">Select an Engineering Case Study</h1>
+      </div>
+
+      <div id="case-study-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar p-1.5 rounded-2xl bg-slate-950/90 border border-slate-800/90" role="tablist" aria-label="Case Studies Switcher">
+        <button type="button" data-study="mikrotik" class="study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition">
+          01. MikroTik RouterOS v7 Lab
+        </button>
+        <button type="button" data-study="openwrt" class="study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+          02. OpenWrt 25.12.6 (APK) Edge
+        </button>
+        <button type="button" data-study="openwrt-mobile" class="study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+          03. Mobile LuCI &amp; Telemetry
+        </button>
+        <!-- FUTURE CASE STUDY TAB TEMPLATE:
+        <button type="button" data-study="your-slug" class="study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+          04. Your Next Case Study Title
+        </button>
+        -->
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- CASE STUDY 01: MIKROTIK ROUTEROS v7 PRACTICAL LAB & TRAINING TESTBENCH -->
+    <!-- ===================================================================== -->
+    <article id="study-mikrotik" data-study-panel="mikrotik" class="space-y-10">
+
+      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+        <div class="max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            CASE STUDY 01 · PRACTICAL ROUTEROS v7 MULTI-ROUTER LAB &amp; TRAINING TESTBENCH
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            MikroTik RouterOS v7 Dual-WAN BGP/OSPF Failover, FTTH PPPoE Concentration &amp; PCQ Bandwidth Engineering
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Built as a hands-on <strong class="text-white">MikroTik MTCNA &amp; MTCRE practical lab simulation</strong> and instructional testbench while serving as a <strong class="text-white">Lead Technical Trainer at Earth Telecommunication Pvt. Ltd. (Race Online Training Wing)</strong>, drawing on operational ISP troubleshooting experience at <strong class="text-white">SSD Tech (Carnival Internet / Dotlines)</strong>. This lab demonstrates sub-50ms BFD link failure recovery, 802.1Q VLAN subscriber isolation, PPPoE session concentration, and Per Connection Queue (PCQ) bandwidth shaping.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">BFD Failover Convergence</div>
+            <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">&lt; 30 ms</div>
+            <div class="text-xs text-slate-400 mt-1">3x 10ms BFD multiplier on Dual-WAN</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">PPPoE Subscriber Capacity</div>
+            <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">240+ Sessions</div>
+            <div class="text-xs text-slate-400 mt-1">1480 MTU + TCP-MSS clamping</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Optical &amp; FTTH Link Margin</div>
+            <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">-18.5 dBm</div>
+            <div class="text-xs text-slate-400 mt-1">Verified ONU/OLT optical budget</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Subscriber Queue Discipline</div>
+            <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">PCQ Fair-Share</div>
+            <div class="text-xs text-slate-400 mt-1">Dynamic sub-stream equalization</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Dual-WAN & PPPoE Topology Simulator -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-cyan-400">Interactive Architecture Simulator</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Dual-ISP BGP/OSPF Edge &amp; FTTH Distribution Topology</h3>
+            <p class="text-sm text-slate-400 mt-1">Toggle operational states below to inspect how the core CCR2004 router handles upstream fiber cuts and subscriber queue allocation.</p>
+          </div>
+          <div class="inline-flex flex-wrap sm:flex-nowrap items-center gap-1.5 p-1.5 rounded-2xl bg-slate-950/90 border border-slate-800/90 shrink-0" role="group" aria-label="Topology Simulation Modes">
+            <button type="button" id="mode-normal-btn" class="whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition">
+              1. Normal Dual-WAN
+            </button>
+            <button type="button" id="mode-failover-btn" class="whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+              2. Simulate ISP-A Fiber Cut
+            </button>
+            <button type="button" id="mode-pppoe-btn" class="whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+              3. Inspect PPPoE + VLANs
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#070b14] border border-slate-800 p-4 sm:p-6 overflow-x-auto">
+          <svg viewBox="0 0 920 260" class="w-full min-w-[680px] h-auto" aria-label="MikroTik Dual-WAN Topology Diagram">
+            <rect x="16" y="28" width="248" height="80" rx="14" fill="#0f172a" stroke="#06b6d4" stroke-width="1.8" id="svg-ispa-box" />
+            <text x="140" y="58" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">ISP-A Primary (AS65001)</text>
+            <text x="140" y="82" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="JetBrains Mono, monospace" id="svg-ispa-status">10G SFP+ · BFD UP (Pref 200)</text>
+
+            <rect x="16" y="152" width="248" height="80" rx="14" fill="#0f172a" stroke="#64748b" stroke-width="1.5" id="svg-ispb-box" />
+            <text x="140" y="182" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">ISP-B Backup (AS65002)</text>
+            <text x="140" y="206" text-anchor="middle" fill="#94a3b8" font-size="10.5" font-family="JetBrains Mono, monospace" id="svg-ispb-status">5G SFP+ · Standby (Prepend 2x)</text>
+
+            <line x1="264" y1="68" x2="336" y2="115" stroke="#06b6d4" stroke-width="3" stroke-dasharray="6 4" id="svg-link-a" />
+            <line x1="264" y1="192" x2="336" y2="145" stroke="#64748b" stroke-width="2" stroke-dasharray="4 4" id="svg-link-b" />
+
+            <rect x="336" y="74" width="248" height="112" rx="16" fill="#0f172a" stroke="#22d3ee" stroke-width="2" />
+            <text x="460" y="108" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700">MikroTik Core CCR2004</text>
+            <text x="460" y="131" text-anchor="middle" fill="#67e8f9" font-size="10.5" font-family="JetBrains Mono, monospace">RouterOS v7.16 · BGP + OSPF</text>
+            <text x="460" y="154" text-anchor="middle" fill="#cbd5e1" font-size="10.5" font-family="JetBrains Mono, monospace" id="svg-core-mode">Active Path: ISP-A Primary</text>
+
+            <line x1="584" y1="115" x2="656" y2="68" stroke="#34d399" stroke-width="2.5" />
+            <line x1="584" y1="145" x2="656" y2="192" stroke="#818cf8" stroke-width="2.5" />
+
+            <rect x="656" y="28" width="248" height="80" rx="14" fill="#0f172a" stroke="#10b981" stroke-width="1.6" />
+            <text x="780" y="58" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">VLAN 10 · FTTH PPPoE Pool</text>
+            <text x="780" y="82" text-anchor="middle" fill="#6ee7b7" font-size="10.5" font-family="JetBrains Mono, monospace">10.10.0.0/22 · PCQ 50M/50M</text>
+
+            <rect x="656" y="152" width="248" height="80" rx="14" fill="#0f172a" stroke="#818cf8" stroke-width="1.6" />
+            <text x="780" y="182" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">VLAN 20 · Corporate DIA</text>
+            <text x="780" y="206" text-anchor="middle" fill="#a5b4fc" font-size="10.5" font-family="JetBrains Mono, monospace">172.16.20.0/24 · SLA Priority 1</text>
+          </svg>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Active Upstream Route</div>
+            <div class="text-sm font-mono font-semibold text-cyan-300 mt-1" id="telemetry-route">ISP-A (103.x.x.1) · Local-Pref 200</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">BFD Session &amp; Convergence State</div>
+            <div class="text-sm font-mono font-semibold text-emerald-400 mt-1" id="telemetry-bfd">Session UP · Tx/Rx 10ms · 0 Drops</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Diagnostic Log Output</div>
+            <div class="text-sm font-mono text-slate-300 mt-1" id="telemetry-log">[bgp,info] Primary transit nominal; PPPoE concentrator serving 240+ active sessions.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive PCQ Bandwidth Calculator -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-emerald-400">Interactive ISP Engineering Tool</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">MikroTik PCQ (Per Connection Queue) Shaper Calculator</h3>
+          <p class="text-sm text-slate-400 mt-1">Calculate per-subscriber fair-share rates, oversubscription ratios, and generate ready-to-paste RouterOS v7 `/queue` commands.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-5 space-y-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <label for="calc-total-bw" class="text-slate-300">Total Parent Pipe Bandwidth (Mbps)</label>
+                <span id="calc-total-bw-val" class="text-cyan-300 font-semibold">500 Mbps</span>
+              </div>
+              <input type="range" id="calc-total-bw" min="50" max="2000" step="50" value="500" class="w-full accent-cyan-400 cursor-pointer" />
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <label for="calc-users" class="text-slate-300">Concurrent Active PPPoE Subscribers</label>
+                <span id="calc-users-val" class="text-cyan-300 font-semibold">50 Users</span>
+              </div>
+              <input type="range" id="calc-users" min="5" max="250" step="5" value="50" class="w-full accent-cyan-400 cursor-pointer" />
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <label for="calc-ceil" class="text-slate-300">Per-Subscriber Max Plan Ceiling (Mbps)</label>
+                <span id="calc-ceil-val" class="text-cyan-300 font-semibold">30 Mbps</span>
+              </div>
+              <input type="range" id="calc-ceil" min="5" max="100" step="5" value="30" class="w-full accent-cyan-400 cursor-pointer" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-800">
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                <div class="text-[11px] font-mono text-slate-400">Guaranteed Floor / User</div>
+                <div class="text-lg font-bold text-emerald-400 mt-0.5" id="calc-floor-out">10.0 Mbps</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                <div class="text-[11px] font-mono text-slate-400">Contention Ratio</div>
+                <div class="text-lg font-bold text-sky-300 mt-0.5" id="calc-ratio-out">1 : 3.0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl bg-[#070b14] border border-slate-800 overflow-hidden">
+            <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-300">Generated RouterOS v7 PCQ Configuration</span>
+              <button type="button" id="copy-pcq-btn" class="px-3 py-1 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition">
+                Copy CLI Script
+              </button>
+            </div>
+            <pre id="pcq-cli-output" class="p-4 text-xs font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabbed Production RouterOS v7 CLI Runbooks -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Verified Field Configurations</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Production RouterOS v7 Engineering Runbooks</h3>
+            <p class="text-sm text-slate-400 mt-1">Select a module to inspect or copy the exact RouterOS v7 configuration used in lab testbenches.</p>
+          </div>
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="RouterOS CLI Runbook Tabs">
+            <button type="button" data-runbook="bgp" class="runbook-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition">
+              01. Dual-WAN BGP + BFD
+            </button>
+            <button type="button" data-runbook="pppoe" class="runbook-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              02. PPPoE + VLANs
+            </button>
+            <button type="button" data-runbook="firewall" class="runbook-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              03. RAW &amp; Control-Plane Hardening
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#070b14] border border-slate-800 overflow-hidden">
+          <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+            <span id="runbook-title" class="text-xs font-mono text-cyan-300">01. RouterOS v7 Dual-Homed eBGP with Sub-30ms BFD Failover</span>
+            <button type="button" id="copy-runbook-btn" class="px-3 py-1 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition">
+              Copy Runbook
+            </button>
+          </div>
+          <pre id="runbook-code" class="p-4 sm:p-5 text-xs font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"></pre>
+        </div>
+      </section>
+    </article>
+
+    <!-- ===================================================================== -->
+    <!-- CASE STUDY 02: ASUS RT-AX52 OPENWRT 25.12.6 (APK) PRODUCTION BUILD    -->
+    <!-- ===================================================================== -->
+    <article id="study-openwrt" data-study-panel="openwrt" class="space-y-10 hidden">
+
+      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+        <div class="max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            CASE STUDY 02 · OPENWRT 25.12.6 (APK) · MEDIATEK MT7981B EDGE ARCHITECTURE
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            ASUS RT-AX52 OpenWrt 25.12.6 (`apk`): HFO vs. SQM CAKE, Quad DoH &amp; 480K+ AdBlock-Fast
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Production edge router engineering on the <strong class="text-white">ASUS RT-AX52</strong> running <strong class="text-white">OpenWrt 25.12.6 (Linux Kernel 6.12.112)</strong> with the modern <strong class="text-white">`apk` package manager (`apk-tools 3.x`)</strong> and MOSSDeF ARM64 feeds. Engineered for <strong class="text-white">~234 MiB usable RAM</strong> with single-threaded AdBlock-Fast (`480,000+` blocked domains), Quad DoH listeners (`5053–5056`), silicon-level Hardware Flow Offloading vs. SQM CAKE switching, and ASUS TFTP Rescue recovery.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Firmware &amp; Package Engine</div>
+            <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">OpenWrt 25.12.6</div>
+            <div class="text-xs text-slate-400 mt-1">Kernel 6.12.112 · Alpine APK v3</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">OOM-Safe Domain Filtering</div>
+            <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">480,000+ Rules</div>
+            <div class="text-xs text-slate-400 mt-1">parallel_downloads=1 on 234 MiB RAM</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Encrypted DNS Redundancy</div>
+            <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">Quad DoH (5053–56)</div>
+            <div class="text-xs text-slate-400 mt-1">Google, Cloudflare, AdGuard, Quad9</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Flash Overlay Headroom</div>
+            <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">50.0 MB Free</div>
+            <div class="text-xs text-slate-400 mt-1">45% used after legacy DoH purge</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive HFO vs. SQM Mode Toggle + Calibration Calculator -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-cyan-400">Silicon Routing Architecture Decision</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Hardware Flow Offloading (HFO) vs. SQM CAKE Mode Toggle</h3>
+            <p class="text-sm text-slate-400 mt-1">On MediaTek MT7981B, Hardware Flow Offloading bypasses the CPU for line-rate gigabit throughput, while SQM CAKE requires Software Flow Offloading only.</p>
+          </div>
+          <div class="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-950/90 border border-slate-800/90 shrink-0" role="group" aria-label="Offloading vs SQM Mode">
+            <button type="button" id="owrt-mode-sqm" class="whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 transition">
+              Option B: Latency / SQM CAKE (&le;500M)
+            </button>
+            <button type="button" id="owrt-mode-hfo" class="whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition">
+              Option A: Gigabit HFO (500M–1G)
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Firewall Offloading State</div>
+            <div class="text-sm font-mono font-semibold text-emerald-400 mt-1" id="owrt-hfo-state">Software Only (flow_offloading_hw='0')</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">MT7981B CPU &amp; Bufferbloat Profile</div>
+            <div class="text-sm font-mono font-semibold text-cyan-300 mt-1" id="owrt-cpu-state">CAKE Active · A+ Bufferbloat Grade</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Recommended Line Speed</div>
+            <div class="text-sm font-mono font-semibold text-slate-200 mt-1" id="owrt-line-state">&le; 400–500 Mbps (Gaming / VoIP Priority)</div>
+          </div>
+        </div>
+
+        <!-- SQM / HFO Calculator & UCI Generator -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div class="lg:col-span-5 space-y-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <label for="sqm-dl" class="text-slate-300">Measured ISP Download Speed (Mbps)</label>
+                <span id="sqm-dl-val" class="text-emerald-400 font-semibold">100 Mbps</span>
+              </div>
+              <input type="range" id="sqm-dl" min="10" max="1000" step="10" value="100" class="w-full accent-emerald-400 cursor-pointer" />
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <label for="sqm-ul" class="text-slate-300">Measured ISP Upload Speed (Mbps)</label>
+                <span id="sqm-ul-val" class="text-emerald-400 font-semibold">20 Mbps</span>
+              </div>
+              <input type="range" id="sqm-ul" min="5" max="1000" step="5" value="20" class="w-full accent-emerald-400 cursor-pointer" />
+            </div>
+
+            <div>
+              <label for="sqm-linklayer" class="block text-xs font-mono text-slate-300 mb-1.5">WAN Encapsulation &amp; Interface</label>
+              <select id="sqm-linklayer" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs font-mono text-slate-200">
+                <option value="0" selected>PPPoE WAN (pppoe-wan · linklayer=none · overhead=0)</option>
+                <option value="44">PPPoE with Explicit Overhead (pppoe-wan · 44 Bytes)</option>
+                <option value="38">Direct Ethernet / DHCP WAN (wan · 38 Bytes)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-slate-800">
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                <div class="text-[11px] font-mono text-slate-400">Calibrated Download (85%)</div>
+                <div class="text-lg font-bold text-cyan-300 mt-0.5" id="sqm-dl-kbps">85,000 kbps</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                <div class="text-[11px] font-mono text-slate-400">Calibrated Upload (85%)</div>
+                <div class="text-lg font-bold text-emerald-400 mt-0.5" id="sqm-ul-kbps">17,000 kbps</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-2xl bg-[#070b14] border border-slate-800 overflow-hidden">
+            <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+              <span class="text-xs font-mono text-slate-300" id="sqm-script-header">Generated OpenWrt 25.12.6 (APK) SQM CAKE UCI Script</span>
+              <button type="button" id="copy-sqm-btn" class="px-3 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-mono transition">
+                Copy UCI Script
+              </button>
+            </div>
+            <pre id="sqm-uci-output" class="p-4 text-xs font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive OpenWrt 25.12.6 Deployment, Health Check & TFTP Recovery Tabs -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400">Master Setup Guide 2.0 Runbooks</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">OpenWrt 25.12.6 (`apk`), 480K+ AdBlock-Fast, Health Check &amp; TFTP Rescue</h3>
+            <p class="text-sm text-slate-400 mt-1">Inspect the exact `apk` commands, OOM-safe AdBlock-Fast config, automated health audit script, and ASUS TFTP unbricking procedure.</p>
+          </div>
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="OpenWrt 25.12.6 Runbook Tabs">
+            <button type="button" data-phase="p1" class="phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 transition">
+              1. APK Feeds &amp; Backup
+            </button>
+            <button type="button" data-phase="p2" class="phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              2. PPPoE &amp; Wi-Fi 6 (BD)
+            </button>
+            <button type="button" data-phase="p3" class="phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              3. Quad DoH &amp; 480K AdBlock
+            </button>
+            <button type="button" data-phase="p4" class="phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              4. One-Click Health Check
+            </button>
+            <button type="button" data-phase="p5" class="phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              5. ASUS TFTP Rescue
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#070b14] border border-slate-800 overflow-hidden">
+          <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+            <span id="phase-title" class="text-xs font-mono text-emerald-300">Phase 1: System Audit, Multi-Layer Sysupgrade Backup &amp; APK Repositories</span>
+            <button type="button" id="copy-phase-btn" class="px-3 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-mono transition">
+              Copy Commands
+            </button>
+          </div>
+          <pre id="phase-code" class="p-4 sm:p-5 text-xs font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"></pre>
+        </div>
+      </section>
+
+      <!-- Verified Upstream Package Matrix -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-sky-400">Software &amp; Repository Inventory</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Verified OpenWrt 25.12.6 Packages &amp; Upstream Sources</h3>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-800">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-900/90 text-slate-300 font-mono text-xs uppercase border-b border-slate-800">
+              <tr>
+                <th class="py-3.5 px-4">Application / Package</th>
+                <th class="py-3.5 px-4">Role in RT-AX52 Stack</th>
+                <th class="py-3.5 px-4">Key Tuning / Hardening</th>
+                <th class="py-3.5 px-4">Upstream Project</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80 bg-slate-950/40">
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">adblock-fast</td>
+                <td class="py-3.5 px-4 text-slate-300">480,000+ domain filtering (HaGeZi Pro, AdGuard CNAME, CERT.pl)</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">parallel_downloads='1', compressed_cache='1'</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/stangri/openwrt-packages" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">stangri/openwrt-packages</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">https-dns-proxy</td>
+                <td class="py-3.5 px-4 text-slate-300">Quad DoH listeners (ports 5053–5056) behind Dnsmasq cache=1000</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">noresolv='1', force_dns on 53/853</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/aarond10/https_dns_proxy" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">aarond10/https_dns_proxy</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">sqm-scripts + kmod-sched-cake</td>
+                <td class="py-3.5 px-4 text-slate-300">CAKE packet scheduling on pppoe-wan</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">flow_offloading_hw='0', piece_of_cake.qos</td>
+                <td class="py-3.5 px-4"><a href="https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">openwrt/sqm-scripts</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">MOSSDeF Community Feed</td>
+                <td class="py-3.5 px-4 text-slate-300">Optimized ARM64 OpenWrt 25.12 APK builds</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">packages.adb feed integration</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/mossdef-org" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">mossdef-org</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">owut &amp; attendedsysupgrade</td>
+                <td class="py-3.5 px-4 text-slate-300">In-place OpenWrt 25.x firmware upgrades preserving APKs</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">sysupgrade -b off-router archival</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/openwrt/owut" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">openwrt/owut</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </article>
+
+    <!-- ===================================================================== -->
+    <!-- CASE STUDY 03: MOBILE-FIRST ROUTER ADMIN & OBSERVABILITY TELEMETRY    -->
+    <!-- ===================================================================== -->
+    <article id="study-openwrt-mobile" data-study-panel="openwrt-mobile" class="space-y-10 hidden">
+
+      <section class="glass-panel rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+        <div class="max-w-3xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            CASE STUDY 03 · SMARTPHONE-FIRST LUCI OPERATIONS &amp; LAN-ISOLATED TELEMETRY
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight">
+            Mobile-First Router Administration &amp; Telemetry: Yet Another LuCI App, OppsError404 &amp; Prometheus
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Built for zero-friction smartphone administration of OpenWrt 25.12.6 using <strong class="text-white">Yet Another LuCI App</strong> over `rpcd`/`uhttpd`, paired with <strong class="text-white">Jerrykuku Argon Theme (v2.4.3)</strong> and the <strong class="text-white">OppsError404 Visual Suite</strong> (`luci-app-dashboard`, `luci-app-client-monitor`, `luci-app-easy-setup`). Long-term observability combines <strong class="text-white">vnStat2</strong>, <strong class="text-white">nlbwmon</strong>, <strong class="text-white">collectd</strong>, and a <strong class="text-white">LAN-isolated Prometheus Lua Exporter (`:9100`)</strong> alongside hardened LAN-only <strong class="text-white">`ttyd` (`192.168.1.1:7681`)</strong>.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800/80">
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Smartphone Control Plane</div>
+            <div class="text-xl sm:text-2xl font-bold text-purple-300 mt-1">Yet Another LuCI</div>
+            <div class="text-xs text-slate-400 mt-1">Native mobile RPC via uhttpd/rpcd</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">UI &amp; Monitoring Suite</div>
+            <div class="text-xl sm:text-2xl font-bold text-cyan-300 mt-1">OppsError404 + Argon</div>
+            <div class="text-xs text-slate-400 mt-1">Dashboard v2.0 + Client Monitor</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Traffic Accounting</div>
+            <div class="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">vnStat2 + nlbwmon</div>
+            <div class="text-xs text-slate-400 mt-1">30s refresh · 24h persistent commit</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Strict LAN Binding</div>
+            <div class="text-xl sm:text-2xl font-bold text-sky-300 mt-1">Ports 7681 &amp; 9100</div>
+            <div class="text-xs text-slate-400 mt-1">Zero WAN exposure (nftables verified)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Mobile Workflow & Daemon Architecture -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Smartphone &amp; Web Telemetry Workflow</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Interactive Mobile Ops &amp; Security Audit Explorer</h3>
+            <p class="text-sm text-slate-400 mt-1">Select a layer below to inspect how the smartphone app, OppsError404 daemons, and LAN-isolated telemetry endpoints interact.</p>
+          </div>
+          <div class="flex flex-wrap gap-2" role="tablist" aria-label="Mobile & Telemetry Modules">
+            <button type="button" data-mob="m1" class="mob-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-purple-500/20 text-purple-300 border border-purple-500/50 transition">
+              01. Smartphone LuCI + Visual Suite
+            </button>
+            <button type="button" data-mob="m2" class="mob-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              02. Client Monitor Fix &amp; Accounting
+            </button>
+            <button type="button" data-mob="m3" class="mob-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition">
+              03. LAN-Only ttyd &amp; Prometheus
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Active Component</div>
+            <div class="text-sm font-mono font-semibold text-purple-300 mt-1" id="mob-card-title">Yet Another LuCI App + Argon v2.4.3</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">RPC / Transport Endpoint</div>
+            <div class="text-sm font-mono font-semibold text-cyan-300 mt-1" id="mob-card-endpoint">192.168.1.1 (uhttpd + rpcd JSON-RPC)</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+            <div class="text-xs font-mono text-slate-400">Operational Benefit</div>
+            <div class="text-sm font-mono font-semibold text-emerald-400 mt-1" id="mob-card-benefit">Zero-SSH mobile diagnostics &amp; client control</div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-[#070b14] border border-slate-800 overflow-hidden">
+          <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+            <span id="mob-code-title" class="text-xs font-mono text-purple-300">01. OppsError404 Visual Suite &amp; Argon Theme Installation (External GitHub APKs)</span>
+            <button type="button" id="copy-mob-btn" class="px-3 py-1 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/30 text-xs font-mono transition">
+              Copy Script
+            </button>
+          </div>
+          <pre id="mob-code-body" class="p-4 sm:p-5 text-xs font-mono text-slate-200 overflow-x-auto code-scroll leading-relaxed"></pre>
+        </div>
+      </section>
+
+      <!-- Mobile & Telemetry Upstream Matrix -->
+      <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-wider text-purple-400">Observability &amp; UI Stack</span>
+          <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Mobile Administration &amp; Telemetry Package Matrix</h3>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-800">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-900/90 text-slate-300 font-mono text-xs uppercase border-b border-slate-800">
+              <tr>
+                <th class="py-3.5 px-4">Tool / Package</th>
+                <th class="py-3.5 px-4">Purpose in Stack</th>
+                <th class="py-3.5 px-4">Hardening / Fix Applied</th>
+                <th class="py-3.5 px-4">Source Repository</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/80 bg-slate-950/40">
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-purple-300">Yet Another LuCI App</td>
+                <td class="py-3.5 px-4 text-slate-300">Smartphone-native OpenWrt monitoring &amp; quick toggles</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">Authenticated rpcd session on LAN</td>
+                <td class="py-3.5 px-4 text-slate-400">Mobile LuCI Client</td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">luci-app-dashboard</td>
+                <td class="py-3.5 px-4 text-slate-300">Multi-core CPU &amp; vnStat integrated LuCI overview</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">vnstat='1', vnstat_db='1', multi_core='1'</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/OppsError404/luci-app-dashboard" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">OppsError404/luci-app-dashboard</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">luci-app-client-monitor</td>
+                <td class="py-3.5 px-4 text-slate-300">Active connected-client &amp; AP traffic monitor</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">mkdir -p /var/run/client_monitor fix</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/OppsError404/luci-app-client-monitor" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">OppsError404/luci-app-client-monitor</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">luci-theme-argon (v2.4.3)</td>
+                <td class="py-3.5 px-4 text-slate-300">Responsive glassmorphic LuCI UI for mobile &amp; desktop</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">Cleared /tmp/luci-*cache</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/jerrykuku/luci-theme-argon" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">jerrykuku/luci-theme-argon</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">prometheus-node-exporter-lua</td>
+                <td class="py-3.5 px-4 text-slate-300">Low-memory Lua Prometheus exporter (Wi-Fi + NAT metrics)</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">listen_interface='lan', port='9100'</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/openwrt/packages" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">openwrt/packages</a></td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-4 font-mono text-cyan-300">vnstat2 + nlbwmon + collectd</td>
+                <td class="py-3.5 px-4 text-slate-300">Interface, per-host netlink, &amp; RRD system telemetry</td>
+                <td class="py-3.5 px-4 font-mono text-xs text-emerald-400">br-lan + pppoe-wan, /tmp/rrd 30s</td>
+                <td class="py-3.5 px-4"><a href="https://github.com/vergoh/vnstat" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">vergoh/vnstat</a> · <a href="https://github.com/jow-/nlbwmon" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">jow-/nlbwmon</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </article>
+
+    <!-- ===================================================================== -->
+    <!-- FUTURE CASE STUDY BLUEPRINT:                                          -->
+    <!-- To add Case Study 04, copy a <button data-study="slug"> above and     -->
+    <!-- paste a matching <article data-study-panel="slug" class="hidden">     -->
+    <!-- block right here. Hash routing (#slug) works automatically!           -->
+    <!-- ===================================================================== -->
+
+  </main>
+
+  <footer class="border-t border-slate-800/80 py-8 mt-12 text-center text-xs text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>&copy; 2026 <a href="https://md-sakib-hosen.github.io/" class="text-slate-200 hover:text-cyan-300">MD Sakib Hosen</a> · Certified MTCNA &amp; MTCRE</div>
+      <div class="flex items-center gap-4">
+        <a href="https://md-sakib-hosen.github.io/" class="hover:text-cyan-300 transition">Portfolio Home</a>
+        <a href="https://github.com/Md-Sakib-Hosen" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition">GitHub</a>
+        <a href="https://www.linkedin.com/in/zero-sakib/" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition">LinkedIn</a>
+        <a href="https://x.com/iam_sakib_hosen" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-300 transition">X (Twitter)</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function copyTextToClipboard(text, btnElement, defaultLabel) {
+      const restore = () => {
+        setTimeout(() => {
+          btnElement.textContent = defaultLabel;
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          btnElement.textContent = 'Copied!';
+          restore();
+        }).catch(() => fallbackCopy(text, btnElement, restore));
+      } else {
+        fallbackCopy(text, btnElement, restore);
+      }
+    }
+
+    function fallbackCopy(text, btnElement, restore) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        btnElement.textContent = 'Copied!';
+      } catch (err) {
+        btnElement.textContent = 'Copy Failed';
+      }
+      document.body.removeChild(ta);
+      restore();
+    }
+
+    // =========================================================================
+    // UNIFIED CASE STUDY SWITCHER (Automatic Tab + #hash Routing)
+    // =========================================================================
+    const studyTabs = document.querySelectorAll('.study-tab');
+    const studyPanels = document.querySelectorAll('[data-study-panel]');
+
+    function switchCaseStudy(slug, updateHash) {
+      const targetPanel = document.querySelector('[data-study-panel="' + slug + '"]');
+      if (!targetPanel) return;
+
+      studyPanels.forEach(panel => {
+        panel.classList.toggle('hidden', panel.getAttribute('data-study-panel') !== slug);
+      });
+
+      studyTabs.forEach(tab => {
+        const isTarget = tab.getAttribute('data-study') === slug;
+        if (isTarget) {
+          tab.className = 'study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition';
+        } else {
+          tab.className = 'study-tab whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition';
+        }
+      });
+
+      if (updateHash && window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', '#' + slug);
+      }
+    }
+
+    studyTabs.forEach(tab => {
+      tab.addEventListener('click', () => switchCaseStudy(tab.getAttribute('data-study'), true));
+    });
+
+    function initCaseStudyFromHash() {
+      const hashSlug = window.location.hash ? window.location.hash.replace('#', '').trim() : '';
+      if (hashSlug && document.querySelector('[data-study-panel="' + hashSlug + '"]')) {
+        switchCaseStudy(hashSlug, false);
+      } else {
+        switchCaseStudy('mikrotik', false);
+      }
+    }
+    window.addEventListener('hashchange', initCaseStudyFromHash);
+
+    // =========================================================================
+    // CASE STUDY 01: MIKROTIK TOPOLOGY SIMULATOR, PCQ CALCULATOR & RUNBOOKS
+    // =========================================================================
+    const modeNormalBtn = document.getElementById('mode-normal-btn');
+    const modeFailoverBtn = document.getElementById('mode-failover-btn');
+    const modePppoeBtn = document.getElementById('mode-pppoe-btn');
+    const svgIspaBox = document.getElementById('svg-ispa-box');
+    const svgIspbBox = document.getElementById('svg-ispb-box');
+    const svgIspaStatus = document.getElementById('svg-ispa-status');
+    const svgIspbStatus = document.getElementById('svg-ispb-status');
+    const svgLinkA = document.getElementById('svg-link-a');
+    const svgLinkB = document.getElementById('svg-link-b');
+    const svgCoreMode = document.getElementById('svg-core-mode');
+    const telemetryRoute = document.getElementById('telemetry-route');
+    const telemetryBfd = document.getElementById('telemetry-bfd');
+    const telemetryLog = document.getElementById('telemetry-log');
+
+    function setActiveTopologyButton(activeBtn) {
+      [modeNormalBtn, modeFailoverBtn, modePppoeBtn].forEach(btn => {
+        btn.className = (btn === activeBtn)
+          ? 'whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition'
+          : 'whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition';
+      });
+    }
+
+    modeNormalBtn.addEventListener('click', () => {
+      setActiveTopologyButton(modeNormalBtn);
+      svgIspaBox.setAttribute('stroke', '#06b6d4');
+      svgIspbBox.setAttribute('stroke', '#64748b');
+      svgIspaStatus.textContent = '10G SFP+ · BFD UP (Pref 200)';
+      svgIspaStatus.setAttribute('fill', '#38bdf8');
+      svgIspbStatus.textContent = '5G SFP+ · Standby (Prepend 2x)';
+      svgIspbStatus.setAttribute('fill', '#94a3b8');
+      svgLinkA.setAttribute('stroke', '#06b6d4');
+      svgLinkB.setAttribute('stroke', '#64748b');
+      svgCoreMode.textContent = 'Active Path: ISP-A Primary';
+      telemetryRoute.textContent = 'ISP-A (103.x.x.1) · Local-Pref 200';
+      telemetryRoute.className = 'text-sm font-mono font-semibold text-cyan-300 mt-1';
+      telemetryBfd.textContent = 'Session UP · Tx/Rx 10ms · 0 Drops';
+      telemetryBfd.className = 'text-sm font-mono font-semibold text-emerald-400 mt-1';
+      telemetryLog.textContent = '[bgp,info] Primary transit nominal; PPPoE concentrator serving 240+ active sessions.';
+    });
+
+    modeFailoverBtn.addEventListener('click', () => {
+      setActiveTopologyButton(modeFailoverBtn);
+      svgIspaBox.setAttribute('stroke', '#f43f5e');
+      svgIspbBox.setAttribute('stroke', '#10b981');
+      svgIspaStatus.textContent = 'LOS ALARM · BFD DOWN (28ms)';
+      svgIspaStatus.setAttribute('fill', '#fb7185');
+      svgIspbStatus.textContent = '5G SFP+ · ACTIVE PRIMARY';
+      svgIspbStatus.setAttribute('fill', '#34d399');
+      svgLinkA.setAttribute('stroke', '#f43f5e');
+      svgLinkB.setAttribute('stroke', '#10b981');
+      svgCoreMode.textContent = 'Failover: ISP-B Transit';
+      telemetryRoute.textContent = 'ISP-B (103.y.y.1) · Backup Promoted';
+      telemetryRoute.className = 'text-sm font-mono font-semibold text-amber-300 mt-1';
+      telemetryBfd.textContent = 'BFD Triggered in 28.4ms · Zero NAT Drop';
+      telemetryBfd.className = 'text-sm font-mono font-semibold text-amber-400 mt-1';
+      telemetryLog.textContent = '[bfd,warn] Peer 103.x.x.1 Down; FIB switched to AS65002 backup path in 28.4ms.';
+    });
+
+    modePppoeBtn.addEventListener('click', () => {
+      setActiveTopologyButton(modePppoeBtn);
+      svgIspaBox.setAttribute('stroke', '#06b6d4');
+      svgIspbBox.setAttribute('stroke', '#38bdf8');
+      svgIspaStatus.textContent = 'VLAN 10 · Residential PPPoE';
+      svgIspaStatus.setAttribute('fill', '#6ee7b7');
+      svgIspbStatus.textContent = 'VLAN 20 · Corporate DIA';
+      svgIspbStatus.setAttribute('fill', '#a5b4fc');
+      svgLinkA.setAttribute('stroke', '#10b981');
+      svgLinkB.setAttribute('stroke', '#818cf8');
+      svgCoreMode.textContent = 'PPPoE + PCQ Shaping Active';
+      telemetryRoute.textContent = 'VLAN 10 (PPPoE) + VLAN 20 (Corporate)';
+      telemetryRoute.className = 'text-sm font-mono font-semibold text-emerald-300 mt-1';
+      telemetryBfd.textContent = 'PCQ Classifiers: dst-address / src-address';
+      telemetryBfd.className = 'text-sm font-mono font-semibold text-cyan-300 mt-1';
+      telemetryLog.textContent = '[pppoe,info] MTU 1480 TCP-MSS clamped; Simple Queue PCQ trees active with zero tail-drop.';
+    });
+
+    const totalBwInput = document.getElementById('calc-total-bw');
+    const usersInput = document.getElementById('calc-users');
+    const ceilInput = document.getElementById('calc-ceil');
+    const totalBwVal = document.getElementById('calc-total-bw-val');
+    const usersVal = document.getElementById('calc-users-val');
+    const ceilVal = document.getElementById('calc-ceil-val');
+    const floorOut = document.getElementById('calc-floor-out');
+    const ratioOut = document.getElementById('calc-ratio-out');
+    const pcqCliOutput = document.getElementById('pcq-cli-output');
+    const copyPcqBtn = document.getElementById('copy-pcq-btn');
+
+    function updatePcqCalculator() {
+      const totalMbps = parseInt(totalBwInput.value, 10) || 500;
+      const users = parseInt(usersInput.value, 10) || 50;
+      const ceilMbps = parseInt(ceilInput.value, 10) || 30;
+      totalBwVal.textContent = totalMbps + ' Mbps';
+      usersVal.textContent = users + ' Users';
+      ceilVal.textContent = ceilMbps + ' Mbps';
+      const guaranteedFloor = (totalMbps / users).toFixed(1);
+      const contention = Math.max(1, (users * ceilMbps / totalMbps)).toFixed(1);
+      floorOut.textContent = guaranteedFloor + ' Mbps';
+      ratioOut.textContent = '1 : ' + contention;
+      const totalQueueSize = Math.min(8000, users * 50);
+
+      pcqCliOutput.textContent = [
+        '# RouterOS v7 PCQ Fair-Share Shaper — Generated for ' + users + ' Active Subscribers',
+        '/queue type',
+        'add name="PCQ_DOWN_' + ceilMbps + 'M" kind=pcq pcq-rate=' + ceilMbps + 'M pcq-limit=50KiB \\',
+        '    pcq-classifier=dst-address pcq-total-limit=' + totalQueueSize + 'KiB',
+        'add name="PCQ_UP_' + ceilMbps + 'M" kind=pcq pcq-rate=' + ceilMbps + 'M pcq-limit=50KiB \\',
+        '    pcq-classifier=src-address pcq-total-limit=' + totalQueueSize + 'KiB',
+        '',
+        '/queue simple',
+        'add name="FTTH_SUBSCRIBER_POOL_SHAPER" target=10.10.0.0/22 \\',
+        '    max-limit=' + totalMbps + 'M/' + totalMbps + 'M \\',
+        '    limit-at=' + Math.floor(totalMbps * 0.85) + 'M/' + Math.floor(totalMbps * 0.85) + 'M \\',
+        '    queue="PCQ_UP_' + ceilMbps + 'M/PCQ_DOWN_' + ceilMbps + 'M" priority=4/4 \\',
+        '    comment="Fair-share PCQ (' + guaranteedFloor + ' Mbps floor, 1:' + contention + ' contention)"'
+      ].join('\n');
+    }
+
+    [totalBwInput, usersInput, ceilInput].forEach(el => el.addEventListener('input', updatePcqCalculator));
+    copyPcqBtn.addEventListener('click', () => copyTextToClipboard(pcqCliOutput.textContent, copyPcqBtn, 'Copy CLI Script'));
+
+    const RUNBOOKS = {
+      bgp: {
+        title: '01. RouterOS v7 Dual-Homed eBGP with Sub-30ms BFD Failover',
+        code: [
+          '# 1. Configure BFD Template for Rapid Link-Failure Detection (<30ms)',
+          '/routing bfd configuration',
+          'add disabled=no interfaces=sfp-sfpplus1-ispA,sfp-sfpplus2-ispB \\',
+          '    min-rx=10ms min-tx=10ms multiplier=3',
+          '',
+          '# 2. Define Routing Filters for Primary Preference & Backup AS-Prepending',
+          '/routing filter rule',
+          'add chain=ISP_A_IN rule="set bgp-local-pref 200; accept;"',
+          'add chain=ISP_B_IN rule="set bgp-local-pref 100; accept;"',
+          'add chain=ISP_B_OUT rule="set bgp-path-prepend 2; accept;"',
+          '',
+          '# 3. Establish Dual eBGP Connections with BFD Enabled',
+          '/routing bgp connection',
+          'add name="eBGP_ISP_A_PRIMARY" remote.address=103.10.20.1/32 .as=65001 \\',
+          '    local.role=ebgp-customer as=65500 use-bfd=yes \\',
+          '    input.filter=ISP_A_IN output.network=bgp-networks',
+          'add name="eBGP_ISP_B_BACKUP" remote.address=103.30.40.1/32 .as=65002 \\',
+          '    local.role=ebgp-customer as=65500 use-bfd=yes \\',
+          '    input.filter=ISP_B_IN output.filter=ISP_B_OUT output.network=bgp-networks'
+        ].join('\n')
+      },
+      pppoe: {
+        title: '02. FTTH PPPoE Server Concentrator & 802.1Q VLAN Isolation',
+        code: [
+          '# 1. Create 802.1Q Subscriber & Enterprise VLAN Interfaces',
+          '/interface vlan',
+          'add interface=sfp-sfpplus3-olt name=vlan10-ftth-pppoe vlan-id=10',
+          'add interface=sfp-sfpplus3-olt name=vlan20-enterprise-dia vlan-id=20',
+          '',
+          '# 2. Configure Subscriber IP Pool & PPPoE Profile with TCP-MSS Clamping',
+          '/ip pool',
+          'add name="pool-ftth-subscribers" ranges=10.10.0.2-10.10.3.254',
+          '/ppp profile',
+          'add name="profile-ftth-50M" local-address=10.10.0.1 \\',
+          '    remote-address=pool-ftth-subscribers dns-server=1.1.1.1,8.8.8.8 \\',
+          '    change-tcp-mss=yes only-one=yes use-encryption=yes',
+          '',
+          '# 3. Enable PPPoE Concentrator on FTTH Distribution VLAN',
+          '/interface pppoe-server server',
+          'add service-name="FTTH_LAB_BRAS" interface=vlan10-ftth-pppoe \\',
+          '    default-profile="profile-ftth-50M" authentication=chap,mschap2 \\',
+          '    one-session-per-host=yes max-mtu=1480 max-mru=1480 disabled=no'
+        ].join('\n')
+      },
+      firewall: {
+        title: '03. RouterOS RAW Bogon Drop & Control-Plane Hardening',
+        code: [
+          '# 1. Lock Management Services Strictly to Trusted NOC Subnet',
+          '/ip service',
+          'set telnet disabled=yes',
+          'set ftp disabled=yes',
+          'set www disabled=yes',
+          'set api disabled=yes',
+          'set winbox port=8291 address=192.168.88.0/24,10.99.0.0/24',
+          'set ssh port=2222 address=192.168.88.0/24,10.99.0.0/24',
+          '',
+          '# 2. Drop External DNS/NTP Amplification in RAW Table (Pre-Conntrack)',
+          '/ip firewall raw',
+          'add chain=prerouting in-interface-list=WAN protocol=udp dst-port=53,123 \\',
+          '    action=drop comment="Drop External Open Resolver & NTP Amplification"',
+          '',
+          '# 3. Protect Router Control Plane in Input Chain',
+          '/ip firewall filter',
+          'add chain=input connection-state=established,related,untracked action=accept',
+          'add chain=input connection-state=invalid action=drop',
+          'add chain=input in-interface-list=WAN action=drop comment="Drop Unauthorized WAN Input"'
+        ].join('\n')
+      }
+    };
+
+    const runbookTabs = document.querySelectorAll('.runbook-tab');
+    const runbookTitle = document.getElementById('runbook-title');
+    const runbookCode = document.getElementById('runbook-code');
+    const copyRunbookBtn = document.getElementById('copy-runbook-btn');
+
+    function selectRunbook(key) {
+      const item = RUNBOOKS[key];
+      if (!item) return;
+      runbookTitle.textContent = item.title;
+      runbookCode.textContent = item.code;
+      runbookTabs.forEach(tab => {
+        tab.className = (tab.getAttribute('data-runbook') === key)
+          ? 'runbook-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition'
+          : 'runbook-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition';
+      });
+    }
+
+    runbookTabs.forEach(tab => tab.addEventListener('click', () => selectRunbook(tab.getAttribute('data-runbook'))));
+    copyRunbookBtn.addEventListener('click', () => copyTextToClipboard(runbookCode.textContent, copyRunbookBtn, 'Copy Runbook'));
+
+    // =========================================================================
+    // CASE STUDY 02: OPENWRT 25.12.6 (APK) HFO vs. SQM TOGGLE & RUNBOOKS
+    // =========================================================================
+    const owrtModeSqmBtn = document.getElementById('owrt-mode-sqm');
+    const owrtModeHfoBtn = document.getElementById('owrt-mode-hfo');
+    const owrtHfoState = document.getElementById('owrt-hfo-state');
+    const owrtCpuState = document.getElementById('owrt-cpu-state');
+    const owrtLineState = document.getElementById('owrt-line-state');
+    const sqmScriptHeader = document.getElementById('sqm-script-header');
+    const sqmDlInput = document.getElementById('sqm-dl');
+    const sqmUlInput = document.getElementById('sqm-ul');
+    const sqmLinklayer = document.getElementById('sqm-linklayer');
+    const sqmDlVal = document.getElementById('sqm-dl-val');
+    const sqmUlVal = document.getElementById('sqm-ul-val');
+    const sqmDlKbps = document.getElementById('sqm-dl-kbps');
+    const sqmUlKbps = document.getElementById('sqm-ul-kbps');
+    const sqmUciOutput = document.getElementById('sqm-uci-output');
+    const copySqmBtn = document.getElementById('copy-sqm-btn');
+
+    let owrtRoutingMode = 'sqm';
+
+    function setOwrtRoutingMode(mode) {
+      owrtRoutingMode = mode;
+      if (mode === 'sqm') {
+        owrtModeSqmBtn.className = 'whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 transition';
+        owrtModeHfoBtn.className = 'whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition';
+        owrtHfoState.textContent = "Software Only (flow_offloading_hw='0')";
+        owrtHfoState.className = 'text-sm font-mono font-semibold text-emerald-400 mt-1';
+        owrtCpuState.textContent = 'CAKE Active · A+ Bufferbloat Grade';
+        owrtCpuState.className = 'text-sm font-mono font-semibold text-cyan-300 mt-1';
+        owrtLineState.textContent = '≤ 400–500 Mbps (Gaming / VoIP Priority)';
+        sqmScriptHeader.textContent = 'Generated OpenWrt 25.12.6 (APK) SQM CAKE UCI Script';
+      } else {
+        owrtModeHfoBtn.className = 'whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 transition';
+        owrtModeSqmBtn.className = 'whitespace-nowrap px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-transparent text-slate-300 border border-transparent hover:text-white hover:bg-slate-800/70 transition';
+        owrtHfoState.textContent = "Silicon Offload (flow_offloading_hw='1')";
+        owrtHfoState.className = 'text-sm font-mono font-semibold text-cyan-300 mt-1';
+        owrtCpuState.textContent = '~0% CPU Utilization · Line-Rate 1 Gbps';
+        owrtCpuState.className = 'text-sm font-mono font-semibold text-amber-300 mt-1';
+        owrtLineState.textContent = '500 Mbps – 1 Gbps (Throughput Priority, SQM Off)';
+        sqmScriptHeader.textContent = 'Generated OpenWrt 25.12.6 Hardware Flow Offloading (HFO) Script';
+      }
+      updateSqmCalculator();
+    }
+
+    owrtModeSqmBtn.addEventListener('click', () => setOwrtRoutingMode('sqm'));
+    owrtModeHfoBtn.addEventListener('click', () => setOwrtRoutingMode('hfo'));
+
+    function updateSqmCalculator() {
+      const dlMbps = parseInt(sqmDlInput.value, 10) || 100;
+      const ulMbps = parseInt(sqmUlInput.value, 10) || 20;
+      const overhead = parseInt(sqmLinklayer.value, 10) || 0;
+
+      sqmDlVal.textContent = dlMbps + ' Mbps';
+      sqmUlVal.textContent = ulMbps + ' Mbps';
+
+      const dlShaped = Math.round(dlMbps * 1000 * 0.85);
+      const ulShaped = Math.round(ulMbps * 1000 * 0.85);
+      const iface = overhead === 38 ? 'wan' : 'pppoe-wan';
+      const linklayer = overhead === 0 ? 'none' : 'ethernet';
+
+      sqmDlKbps.textContent = dlShaped.toLocaleString('en-US') + ' kbps';
+      sqmUlKbps.textContent = ulShaped.toLocaleString('en-US') + ' kbps';
+
+      if (owrtRoutingMode === 'hfo') {
+        sqmUciOutput.textContent = [
+          '# Option A: Hardware Flow Offloading (Throughput Priority — 500 Mbps to 1 Gbps)',
+          '# Note: SQM must remain disabled when MT7981B Hardware Flow Offloading is active.',
+          'uci set firewall.@defaults[0].flow_offloading=\'1\'',
+          'uci set firewall.@defaults[0].flow_offloading_hw=\'1\'',
+          'uci commit firewall && /etc/init.d/firewall restart',
+          '',
+          '# Enable Multi-Core Packet Steering (RPS/XPS) on MT7981B',
+          'uci set network.@globals[0].packet_steering=\'1\'',
+          'uci commit network && /etc/init.d/network restart',
+          '',
+          '# Ensure SQM is disabled so HFO handles flows in silicon',
+          'uci set sqm.sqm1.enabled=\'0\' 2>/dev/null || true',
+          '/etc/init.d/sqm stop 2>/dev/null || true'
+        ].join('\n');
+      } else {
+        sqmUciOutput.textContent = [
+          '# Option B: Software Flow Offloading + SQM CAKE (85% of ' + dlMbps + '/' + ulMbps + ' Mbps)',
+          'uci set firewall.@defaults[0].flow_offloading=\'1\'',
+          'uci set firewall.@defaults[0].flow_offloading_hw=\'0\'',
+          'uci commit firewall && /etc/init.d/firewall restart',
+          '',
+          'apk add sqm-scripts luci-app-sqm kmod-sched-cake tc-tiny',
+          'uci set sqm.sqm1=queue',
+          'uci set sqm.sqm1.enabled=\'1\'',
+          'uci set sqm.sqm1.interface=\'' + iface + '\'',
+          'uci set sqm.sqm1.download=\'' + dlShaped + '\'',
+          'uci set sqm.sqm1.upload=\'' + ulShaped + '\'',
+          'uci set sqm.sqm1.qdisc=\'cake\'',
+          'uci set sqm.sqm1.script=\'piece_of_cake.qos\'',
+          'uci set sqm.sqm1.linklayer=\'' + linklayer + '\'',
+          'uci set sqm.sqm1.overhead=\'' + overhead + '\'',
+          'uci commit sqm && /etc/init.d/sqm enable && /etc/init.d/sqm restart',
+          '',
+          '# Verification:',
+          'tc -s qdisc show dev ' + iface
+        ].join('\n');
+      }
+    }
+
+    [sqmDlInput, sqmUlInput, sqmLinklayer].forEach(el => {
+      el.addEventListener('input', updateSqmCalculator);
+      el.addEventListener('change', updateSqmCalculator);
+    });
+    copySqmBtn.addEventListener('click', () => copyTextToClipboard(sqmUciOutput.textContent, copySqmBtn, 'Copy UCI Script'));
+
+    const PHASES = {
+      p1: {
+        title: 'Phase 1: System Audit, Multi-Layer Sysupgrade Backup & APK Repositories (25.12.6)',
+        code: [
+          '# 1. Verify Hardware, Kernel 6.12.112, APK v3 & 234 MiB RAM',
+          'ubus call system board; uname -a; apk --version; free -h; df -h /overlay',
+          '',
+          '# 2. Multi-Layer Backup (Full Sysupgrade + Granular Config Tarball + APK Manifest)',
+          'TIMESTAMP=$(date +%Y%m%d-%H%M%S)',
+          'sysupgrade -b "/root/sysupgrade-backup-${TIMESTAMP}.tar.gz"',
+          'apk info -vv > "/root/installed-packages-${TIMESTAMP}.txt"',
+          '',
+          '# 3. Configure Official OpenWrt 25.12.6 Feeds + MOSSDeF Community Feed',
+          'cat << \'EOF\' > /etc/apk/repositories',
+          'https://downloads.openwrt.org/releases/25.12.6/targets/mediatek/filogic/packages',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/base',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/luci',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/packages',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/routing',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/telephony',
+          'https://downloads.openwrt.org/releases/25.12.6/packages/aarch64_cortex-a53/video',
+          'https://repo.mossdef.org/releases/25.12/aarch64_cortex-a53/packages.adb',
+          'EOF',
+          'apk update'
+        ].join('\n')
+      },
+      p2: {
+        title: 'Phase 2: PPPoE WAN, DHCPv6 Prefix Delegation & Dual-Band Wi-Fi 6 (BD Regulatory)',
+        code: [
+          '# 1. Configure PPPoE WAN & DHCPv6 Prefix Delegation',
+          'uci set network.wan.device=\'wan\'',
+          'uci set network.wan.proto=\'pppoe\'',
+          'uci set network.wan.ipv6=\'auto\'',
+          'uci set network.wan6.proto=\'dhcpv6\'',
+          'uci set network.wan6.reqprefix=\'auto\'',
+          'uci commit network && /etc/init.d/network restart',
+          '',
+          '# 2. Configure Wi-Fi 6 (phy0 2.4GHz HE20 + phy1 5GHz HE80) for Asia/Dhaka (BD)',
+          'uci set wireless.radio0.country=\'BD\'',
+          'uci set wireless.radio0.htmode=\'HE20\'',
+          'uci set wireless.radio1.country=\'BD\'',
+          'uci set wireless.radio1.htmode=\'HE80\'',
+          'uci set wireless.radio1.channel=\'36\'',
+          'uci set wireless.default_radio1.encryption=\'sae-mixed\'',
+          'uci commit wireless && wifi reload'
+        ].join('\n')
+      },
+      p3: {
+        title: 'Phase 3: Quad DoH (5053–5056) & 480,000+ Domain AdBlock-Fast (OOM-Safe)',
+        code: [
+          '# 1. Forward Dnsmasq (cachesize=1000, noresolv=1) to Quad DoH Listeners',
+          'apk add https-dns-proxy luci-app-https-dns-proxy',
+          'uci set dhcp.@dnsmasq[0].noresolv=\'1\'',
+          'uci set dhcp.@dnsmasq[0].cachesize=\'1000\'',
+          'uci del dhcp.@dnsmasq[0].server 2>/dev/null || true',
+          'for p in 5053 5054 5055 5056; do uci add_list dhcp.@dnsmasq[0].server="127.0.0.1#${p}"; done',
+          'uci commit dhcp && /etc/init.d/dnsmasq restart',
+          '',
+          '# 2. Install AdBlock-Fast & Lock Single-Thread Concurrency (parallel_downloads=1)',
+          'apk add adblock-fast luci-app-adblock-fast gawk grep sed coreutils-sort',
+          'uci set adblock-fast.config.enabled=\'1\'',
+          'uci set adblock-fast.config.compressed_cache=\'1\'',
+          'uci set adblock-fast.config.parallel_downloads=\'1\'',
+          'uci set adblock-fast.config.force_dns=\'1\'',
+          '# Active feeds: HaGeZi Pro wildcard + AdGuard CNAME trackers/ads + CERT.pl',
+          'uci commit adblock-fast && /etc/init.d/adblock-fast enable && /etc/init.d/adblock-fast restart && /etc/init.d/adblock-fast dl'
+        ].join('\n')
+      },
+      p4: {
+        title: 'Phase 4: One-Click System Health & OOM Audit Script (/tmp/rt_ax52_healthcheck.sh)',
+        code: [
+          'cat << \'EOF\' > /tmp/rt_ax52_healthcheck.sh',
+          '#!/bin/sh',
+          'echo "=== ASUS RT-AX52 HEALTH & SERVICE AUDIT ==="',
+          'free -h | grep -E "total|Mem:"',
+          'df -h /overlay | awk "NR==1 || NR==2"',
+          'for PORT in 5053 5054 5055 5056; do',
+          '  RESULT=$(dig @127.0.0.1 -p $PORT google.com +short +time=2 2>/dev/null | tail -1)',
+          '  [ -n "$RESULT" ] && echo "[OK] DoH $PORT: $RESULT" || echo "[FAIL] DoH $PORT"',
+          'done',
+          '/etc/init.d/adblock-fast status 2>/dev/null | head -n 4',
+          'echo "ttyd: $(netstat -lntp 2>/dev/null | grep ttyd | awk \'{print $4}\')"',
+          'echo "Prometheus: $(netstat -lntp 2>/dev/null | grep 9100 | awk \'{print $4}\')"',
+          'tc -s qdisc show dev pppoe-wan 2>/dev/null | grep -E "qdisc cake|Sent" || echo "SQM inactive"',
+          'OOM_LOG=$(dmesg | grep -i -E "oom|killed process|out of memory" | tail -n 3)',
+          '[ -z "$OOM_LOG" ] && echo "[OK] Clean kernel log: No OOM events." || echo "$OOM_LOG"',
+          'EOF',
+          'chmod +x /tmp/rt_ax52_healthcheck.sh && /tmp/rt_ax52_healthcheck.sh'
+        ].join('\n')
+      },
+      p5: {
+        title: 'Phase 5: Hardware Disaster Recovery — ASUS TFTP Rescue Mode (192.168.1.1)',
+        code: [
+          '# 1. Hardware Trigger Sequence:',
+          '#    Unplug power -> Hold rear Reset -> Plug power -> Hold 5-8s until slow LED flash -> Release',
+          '',
+          '# 2. Host Workstation Static IP Configuration (Connected to LAN Port 1):',
+          '#    IP: 192.168.1.10 | Mask: 255.255.255.0 | Gateway: 192.168.1.1',
+          '',
+          '# 3. Upload Factory Recovery Image via TFTP (Linux/macOS or ASUS Firmware Restoration Utility):',
+          'tftp 192.168.1.1 -m binary -c put openwrt-mediatek-filogic-asus_rt-ax52-initramfs-factory.bin',
+          '',
+          '# 4. Wait 5-7 minutes for flash write and automatic reboot.'
+        ].join('\n')
+      }
+    };
+
+    const phaseTabs = document.querySelectorAll('.phase-tab');
+    const phaseTitle = document.getElementById('phase-title');
+    const phaseCode = document.getElementById('phase-code');
+    const copyPhaseBtn = document.getElementById('copy-phase-btn');
+
+    function selectPhase(key) {
+      const item = PHASES[key];
+      if (!item) return;
+      phaseTitle.textContent = item.title;
+      phaseCode.textContent = item.code;
+      phaseTabs.forEach(tab => {
+        tab.className = (tab.getAttribute('data-phase') === key)
+          ? 'phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 transition'
+          : 'phase-tab px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition';
+      });
+    }
+
+    phaseTabs.forEach(tab => tab.addEventListener('click', () => selectPhase(tab.getAttribute('data-phase'))));
+    copyPhaseBtn.addEventListener('click', () => copyTextToClipboard(phaseCode.textContent, copyPhaseBtn, 'Copy Commands'));
+
+    // =========================================================================
+    // CASE STUDY 03: MOBILE-FIRST LUCI & TELEMETRY EXPLORER
+    // =========================================================================
+    const MOBILE_MODULES = {
+      m1: {
+        cardTitle: 'Yet Another LuCI App + Argon v2.4.3',
+        endpoint: '192.168.1.1 (uhttpd + rpcd JSON-RPC)',
+        benefit: 'Zero-SSH mobile diagnostics & client control',
+        codeTitle: '01. OppsError404 Visual Suite & Jerrykuku Argon Theme Installer (APK)',
+        code: [
+          '# Install prerequisite tools via OpenWrt 25.12.6 APK',
+          'apk update && apk add --no-cache curl ca-bundle',
+          '',
+          '# 1. OppsError404 Realtime Dashboard & Easy Setup Wizard',
+          'wget -O /tmp/luci-app-dashboard.apk "https://github.com/OppsError404/luci-app-dashboard/releases/download/v2.0.0-r6/luci-app-dashboard-2.0.0-r6.apk"',
+          'apk add --allow-untrusted /tmp/luci-app-dashboard.apk && rm -f /tmp/luci-app-dashboard.apk',
+          'uci set dashboard.settings.vnstat=\'1\'',
+          'uci set dashboard.settings.vnstat_db=\'1\'',
+          'uci set dashboard.settings.multi_core=\'1\'',
+          'uci commit dashboard',
+          '',
+          '# 2. Jerrykuku Argon Theme (v2.4.3) + LuCI Cache Rebuild for Mobile & Desktop',
+          'wget -O /tmp/luci-theme-argon.apk "https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.4.3/luci-theme-argon-2.4.3-r20250722.apk"',
+          'apk add --allow-untrusted /tmp/luci-theme-argon.apk && rm -f /tmp/luci-theme-argon.apk',
+          'uci set luci.main.mediaurlbase=\'/luci-static/argon\' && uci commit luci',
+          'rm -rf /tmp/luci-indexcache /tmp/luci-modulecache',
+          '/etc/init.d/uhttpd restart && /etc/init.d/rpcd restart'
+        ].join('\n')
+      },
+      m2: {
+        cardTitle: 'Client Monitor Fix + vnStat2 / nlbwmon',
+        endpoint: '/var/run/client_monitor + /var/lib/nlbwmon',
+        benefit: 'Per-host traffic & 30s RRD telemetry',
+        codeTitle: '02. Client Monitor Cache Repair, vnStat2, nlbwmon & collectd Setup',
+        code: [
+          '# 1. Install & Fix OppsError404 Client Monitor Daemon (Stopped Collector Fix)',
+          'wget -O /tmp/luci-app-client-monitor.apk "https://github.com/OppsError404/luci-app-client-monitor/releases/download/v1.0.0-r3/luci-app-client-monitor-1.0.0-r3.apk"',
+          'apk add --allow-untrusted /tmp/luci-app-client-monitor.apk && rm -f /tmp/luci-app-client-monitor.apk',
+          'mkdir -p /var/run/client_monitor',
+          '/etc/init.d/client_monitor enable && /etc/init.d/client_monitor restart',
+          '',
+          '# 2. Configure Interface (vnStat2) & Per-Host (nlbwmon) Bandwidth Accounting',
+          'apk add vnstat2 vnstati2 nlbwmon luci-app-nlbwmon',
+          'uci set vnstat2.@vnstat[0].interface=\'br-lan pppoe-wan\' && uci commit vnstat2',
+          'uci set nlbwmon.@nlbwmon[0].commit_interval=\'24h\'',
+          'uci set nlbwmon.@nlbwmon[0].refresh_interval=\'30s\' && uci commit nlbwmon',
+          '/etc/init.d/vnstat enable && /etc/init.d/vnstat restart',
+          '/etc/init.d/nlbwmon enable && /etc/init.d/nlbwmon restart',
+          '',
+          '# 3. Enable collectd RRD Performance Graphs',
+          'apk add collectd luci-app-statistics collectd-mod-cpu collectd-mod-interface collectd-mod-iwinfo collectd-mod-load collectd-mod-memory',
+          '/etc/init.d/collectd enable && /etc/init.d/collectd restart'
+        ].join('\n')
+      },
+      m3: {
+        cardTitle: 'LAN-Isolated ttyd & Prometheus Lua',
+        endpoint: '192.168.1.1:7681 & 192.168.1.1:9100',
+        benefit: 'Zero WAN attack surface (nftables audited)',
+        codeTitle: '03. Hardened LAN-Only ttyd Terminal & Prometheus Node Exporter Lua',
+        code: [
+          '# 1. Restrict Web Terminal (ttyd) Strictly to @lan with /bin/login Auth',
+          'apk add ttyd luci-app-ttyd',
+          'uci set ttyd.@ttyd[0].interface=\'@lan\'',
+          'uci set ttyd.@ttyd[0].command=\'/bin/login\'',
+          'uci commit ttyd && /etc/init.d/ttyd enable && /etc/init.d/ttyd restart',
+          '',
+          '# 2. Bind Prometheus Node Exporter Lua Strictly to LAN (Port 9100)',
+          'apk add prometheus-node-exporter-lua prometheus-node-exporter-lua-wifi prometheus-node-exporter-lua-nat_traffic',
+          'uci set prometheus-node-exporter-lua.main.listen_interface=\'lan\'',
+          'uci set prometheus-node-exporter-lua.main.listen_port=\'9100\'',
+          'uci commit prometheus-node-exporter-lua',
+          '/etc/init.d/prometheus-node-exporter-lua enable && /etc/init.d/prometheus-node-exporter-lua restart',
+          '',
+          '# 3. Security Audit: Confirm Ports 7681 & 9100 Are Bound to LAN Only',
+          'netstat -lntp | grep -E "7681|9100"',
+          'nft list ruleset | grep -i -E "7681|9100"'
+        ].join('\n')
+      }
+    };
+
+    const mobTabs = document.querySelectorAll('.mob-tab');
+    const mobCardTitle = document.getElementById('mob-card-title');
+    const mobCardEndpoint = document.getElementById('mob-card-endpoint');
+    const mobCardBenefit = document.getElementById('mob-card-benefit');
+    const mobCodeTitle = document.getElementById('mob-code-title');
+    const mobCodeBody = document.getElementById('mob-code-body');
+    const copyMobBtn = document.getElementById('copy-mob-btn');
+
+    function selectMobileModule(key) {
+      const item = MOBILE_MODULES[key];
+      if (!item) return;
+      mobCardTitle.textContent = item.cardTitle;
+      mobCardEndpoint.textContent = item.endpoint;
+      mobCardBenefit.textContent = item.benefit;
+      mobCodeTitle.textContent = item.codeTitle;
+      mobCodeBody.textContent = item.code;
+      mobTabs.forEach(tab => {
+        tab.className = (tab.getAttribute('data-mob') === key)
+          ? 'mob-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-purple-500/20 text-purple-300 border border-purple-500/50 transition'
+          : 'mob-tab px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-800/80 text-slate-300 border border-slate-700 hover:text-white transition';
+      });
+    }
+
+    mobTabs.forEach(tab => tab.addEventListener('click', () => selectMobileModule(tab.getAttribute('data-mob'))));
+    copyMobBtn.addEventListener('click', () => copyTextToClipboard(mobCodeBody.textContent, copyMobBtn, 'Copy Script'));
+
+    // Initialize all views
+    initCaseStudyFromHash();
+    updatePcqCalculator();
+    selectRunbook('bgp');
+    setOwrtRoutingMode('sqm');
+    selectPhase('p1');
+    selectMobileModule('m1');
+  </script>
+</body>
+</html>
