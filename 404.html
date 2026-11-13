@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,93 +9,321 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.ahrefs.com https://www.clarity.ms https://*.clarity.ms https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://formsubmit.co https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://analytics.ahrefs.com https://*.clarity.ms https://cloudflareinsights.com https://*.cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests;">
   <meta name="theme-color" content="#07090e">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/tailwind.css">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon.png">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: #07090e;
       color: #e2e8f0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    .bg-grid-pattern {
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.5;
       background-size: 36px 36px;
-      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .glow-1 {
+      position: absolute;
+      top: -160px;
+      left: -160px;
+      width: 500px;
+      height: 500px;
+      border-radius: 9999px;
+      background: rgba(8, 145, 178, 0.12);
+      filter: blur(140px);
+    }
+    .glow-2 {
+      position: absolute;
+      bottom: -160px;
+      right: 20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 9999px;
+      background: rgba(2, 132, 199, 0.12);
+      filter: blur(140px);
+    }
+    header {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.8);
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #f1f5f9;
+    }
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      padding: 1px;
+      background: linear-gradient(135deg, #06b6d4, #0284c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px -5px rgba(6, 182, 212, 0.25);
+    }
+    .brand-icon-inner {
+      width: 100%;
+      height: 100%;
+      background: #090b14;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-name { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+    .brand-badge {
+      display: inline-block;
+      margin-left: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #22d3ee;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(8, 51, 68, 0.6);
+      border: 1px solid rgba(21, 94, 117, 0.5);
+    }
+    .header-btn {
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid #334155;
+      color: #67e8f9;
+      transition: border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .header-btn:hover { border-color: rgba(6, 182, 212, 0.6); background: rgba(30, 41, 59, 1); }
+    main {
+      position: relative;
+      z-index: 10;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+    }
+    .card {
+      width: 100%;
+      max-width: 672px;
+      margin: 0 auto;
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(30, 41, 59, 0.9);
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(8, 51, 68, 0.65);
+      border: 1px solid rgba(21, 94, 117, 0.6);
+      color: #67e8f9;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin-bottom: 24px;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #22d3ee;
+      box-shadow: 0 0 8px #22d3ee;
+    }
+    h1 {
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #22d3ee, #38bdf8, #34d399);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .desc {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .desc strong { color: #e2e8f0; }
+    .terminal {
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.92);
+      border: 1px solid rgba(30, 41, 59, 0.95);
+      padding: 16px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #cbd5e1;
+      margin-bottom: 28px;
+      overflow-x: auto;
+    }
+    .term-muted { color: #64748b; }
+    .term-cyan { color: #22d3ee; }
+    .term-amber { color: #fcd34d; }
+    .term-emerald { color: #34d399; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-primary {
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #06b6d4, #0284c7);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.35);
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-secondary {
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 14px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(6, 182, 212, 0.55); color: #67e8f9; }
+    .btn-mono {
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      color: #22d3ee;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      transition: border-color 0.2s;
+    }
+    .btn-mono:hover { border-color: rgba(6, 182, 212, 0.55); }
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid rgba(30, 41, 59, 0.8);
+      padding: 20px 16px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+    @media (max-width: 640px) {
+      .brand-badge { display: none; }
+      .card { padding: 24px; }
+      .actions a { width: 100%; text-align: center; }
     }
   </style>
 </head>
-<body class="bg-[#07090e] text-slate-200 antialiased min-h-screen flex flex-col justify-between relative overflow-x-hidden">
-  <div class="fixed inset-0 pointer-events-none z-0">
-    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px]"></div>
-    <div class="absolute -bottom-40 right-1/4 w-[500px] h-[500px] bg-sky-600/10 rounded-full blur-[140px]"></div>
-    <div class="absolute inset-0 bg-grid-pattern opacity-50"></div>
+<body>
+  <div class="bg-layer">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+    <div class="bg-grid"></div>
   </div>
 
-  <header class="w-full border-b border-slate-800/80 bg-[#07090e]/85 backdrop-blur-xl z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-sky-600 p-[1px] flex items-center justify-center shadow-lg shadow-cyan-500/20">
-          <div class="w-full h-full bg-[#090b14] rounded-[7px] flex items-center justify-center">
-            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+  <header>
+    <div class="header-inner">
+      <a href="/" class="brand">
+        <div class="brand-icon">
+          <div class="brand-icon-inner">
+            <svg width="16" height="16" fill="none" stroke="#22d3ee" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l3 3-3 3m5 0h3"></path>
             </svg>
           </div>
         </div>
         <div>
-          <span class="font-bold text-slate-100 tracking-tight group-hover:text-cyan-400 transition-colors">MD Sakib Hosen</span>
-          <span class="hidden sm:inline-block ml-2 text-xs font-mono text-cyan-400/90 px-2 py-0.5 rounded-full bg-cyan-950/60 border border-cyan-800/50">MTCNA · MTCRE</span>
+          <span class="brand-name">MD Sakib Hosen</span>
+          <span class="brand-badge">MTCNA · MTCRE</span>
         </div>
       </a>
-      <a href="/" class="text-xs font-semibold px-4 py-2 rounded-lg bg-slate-800/90 border border-slate-700 text-cyan-300 hover:border-cyan-500/50 transition-all">
-        Return Home
-      </a>
+      <a href="/" class="header-btn">Return Home</a>
     </div>
   </header>
 
-  <main class="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 z-10">
-    <div class="max-w-2xl w-full rounded-3xl bg-slate-900/70 border border-slate-800/90 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/60 text-cyan-300 text-xs font-mono mb-6">
-        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+  <main>
+    <div class="card">
+      <div class="status-pill">
+        <span class="pulse-dot"></span>
         ICMP_DESTINATION_UNREACHABLE · HTTP 404
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-        Packet Dropped: <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">Route Not Found</span>
-      </h1>
-      <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-6">
-        The requested URL does not exist in the routing table for <strong class="text-slate-200">md-sakib-hosen.github.io</strong>. Check the path or jump directly to an active portfolio interface below.
+      <h1>Packet Dropped: <span class="gradient-text">Route Not Found</span></h1>
+      <p class="desc">
+        The requested URL does not exist in the routing table for <strong>md-sakib-hosen.github.io</strong>. Check the path or jump directly to an active portfolio interface below.
       </p>
 
-      <div class="rounded-2xl bg-slate-950/90 border border-slate-800/90 p-4 font-mono text-xs text-slate-300 space-y-1.5 mb-8">
-        <div class="text-slate-500"># RouterOS Diagnostic Trace</div>
-        <div><span class="text-cyan-400">[admin@MikroTik-Core] &gt;</span> /ip route check dst-address=requested-url</div>
-        <div class="text-amber-300">status: no-route-to-host (code 404)</div>
-        <div class="text-emerald-400">action: redirecting to default gateway https://md-sakib-hosen.github.io/</div>
+      <div class="terminal">
+        <div class="term-muted"># RouterOS Diagnostic Trace</div>
+        <div><span class="term-cyan">[admin@MikroTik-Core] &gt;</span> /ip route check dst-address=requested-url</div>
+        <div class="term-amber">status: no-route-to-host (code 404)</div>
+        <div class="term-emerald">action: redirecting to default gateway https://md-sakib-hosen.github.io/</div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="/" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-sky-600 text-white font-semibold text-sm hover:from-cyan-400 hover:to-sky-500 shadow-lg shadow-cyan-500/20 transition-all">
-          Back to Portfolio Home
-        </a>
-        <a href="/#projects" class="px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 text-sm font-medium transition-all">
-          View Case Studies
-        </a>
-        <a href="/#contact" class="px-4 py-3 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 hover:border-cyan-500/50 hover:text-cyan-300 text-sm font-medium transition-all">
-          Contact Sakib
-        </a>
-        <a href="/MD_Sakib_Hosen_CV.pdf" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-cyan-400 hover:border-cyan-500/50 text-sm font-mono transition-all">
-          Download CV (PDF)
-        </a>
+      <div class="actions">
+        <a href="/" class="btn-primary">Back to Portfolio Home</a>
+        <a href="/#projects" class="btn-secondary">View Case Studies</a>
+        <a href="/#contact" class="btn-secondary">Contact Sakib</a>
+        <a href="/MD_Sakib_Hosen_CV.pdf" target="_blank" rel="noopener noreferrer" class="btn-mono">Download CV (PDF)</a>
       </div>
     </div>
   </main>
 
-  <footer class="border-t border-slate-800/80 py-6 text-center text-xs text-slate-500 z-10">
+  <footer>
     © 2026 MD Sakib Hosen · Certified MTCNA, MTCRE &amp; NSDA Level-3 IT &amp; Network Support Engineer
   </footer>
 </body>
